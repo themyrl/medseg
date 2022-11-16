@@ -6,8 +6,8 @@
 #SBATCH --cpus-per-task=10           # number of cores per tasks
 #SBATCH --hint=nomultithread         # we get physical cores not logical
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
-#SBATCH --time=00:10:00             # maximum execution time (HH:MM:SS)
-#SBATCH --qos=qos_gpu-dev
+#SBATCH --time=00:45:00             # maximum execution time (HH:MM:SS)
+#SBATCH --qos=qos_gpu-t3
 #SBATCH --output=logs/debug.out # output file name # add %j to id the job
 #SBATCH --error=logs/debug.err  # error file name # add %j to id the job
 # # #   SBATCH -C v100-32g
@@ -25,7 +25,7 @@ module load python/3.8.8
 
 # Dataset preprocessing
 srun python convert_dataset.py /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USimg /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USimg_128 128
-# srun python convert_dataset.py /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_128 128
+srun python convert_dataset.py /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_128 128
 
 
 # Training
