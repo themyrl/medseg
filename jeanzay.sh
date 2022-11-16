@@ -14,7 +14,7 @@
 set -x
 
 
-cd $WORK/usseg
+cd $WORK/medseg
 module purge
 module load cuda/10.1.2
 module load python/3.8.8
