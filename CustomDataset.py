@@ -11,6 +11,8 @@ import numpy as np
 from tools import downsample_seg_for_ds_transform3
 from einops import rearrange
 
+import torch
+
 # import time
 
 class CustomDataset(Dataset):
