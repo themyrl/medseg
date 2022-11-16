@@ -304,7 +304,7 @@ class Trainer():
                         labels[lab] = labels[lab].cuda(0)
 
 
-                print("inputs" ,type(inputs))
+                log.debug("inputs" ,type(inputs))
 
                 output = self.model(inputs, centers)
 
