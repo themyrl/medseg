@@ -16,7 +16,7 @@ class CustomDataset(Dataset):
 	def __init__(self, data, transform=None, iterations=250, crop_size=[128,128,128], log=None, net_num_pool_op_kernel_sizes=[], type_='train', *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		# We use our own Custom dataset wich with we can keep track of sub volumes position.
-		self.data = Dataset(data)
+		self.data = monai.data.Dataset(data)
 		self.iterations = iterations
 		self.loader = LoadImage()
 		self.n_data = len(data)
