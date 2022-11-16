@@ -89,7 +89,7 @@ class CustomDataset(Dataset):
 		data_i["center"] = np.array(centers)
 
 
-
+		data_i["image"] = torch.from_numpy(data_i["image"].numpy())
 		# Do deep supervision on labels
 		if self.net_num_pool_op_kernel_sizes!=[]:
 			deep_supervision_scales = [[1, 1, 1]] + list(list(i) for i in 1 / np.cumprod(
