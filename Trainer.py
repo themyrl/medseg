@@ -1,7 +1,8 @@
 import os
 import torch
 from monai.losses import DiceLoss
-from monai.data import DataLoader
+# from monai.data import DataLoader
+from torch.data import DataLoader
 from monai.transforms import (
     Compose,
     Orientationd,
