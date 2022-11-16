@@ -12,7 +12,7 @@ epochs: 1000
 iter: 250
 online_validation: True
 eval_step: 10
-batch_size: 2
+batch_size: 1
 num_workers: 1
 crop_size: [128,128,128]
 do_clip: True
