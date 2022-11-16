@@ -276,12 +276,20 @@ class Trainer():
 
         best_metric = -1
 
+        log.debug('run_training')
+
         for epoch in range(self.start_epoch, self.epochs):
+
             self.model.train()
+
+
             self.optimizer.param_groups[0]['lr'] = self.lr
             btc = 0
             l_train = 0
+            log.debug('epoch{}'.format(epoch))
+
             for batch_data in tqdm(self.train_loader):
+                log.debug('batch loaded')
                 btc += 1
                 self.optimizer.zero_grad()
 
