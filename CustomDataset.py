@@ -38,11 +38,14 @@ class CustomDataset(Dataset):
 		self.idx = -1
 
 	def __len__(self):
+		log.debug("---- len start")
 		if self.type == 'train':
 			if self.iterations == 0:
 				return len(self.data)
+			log.debug("---- len end 1")
 			return self.iterations
 		else:
+			log.debug("---- len end 2")
 			return len(self.data)
 
 	def __getitem__(self, index):
