@@ -31,11 +31,15 @@ def main(argv, arc):
 			b = (l in f)
 		if (".nii" in f) and not b:
 			x = nib.load(os.path.join(path, f)).get_fdata()
+			print("x hsape", x.shape)
 			out_f = f.replace(".nii.gz", ".npz")
 			if size != None:
 				x = torch.from_numpy(x)
 				x = T.Resize(size, mode="nearest")(x[None, ...])[0,...]
+				print("x hsape", x.shape)
 				x = x[0,...].numpy()
+				print("x hsape", x.shape)
+				exit(0)
 			np.savez(os.path.join(out_path, out_f), x)
 
 
