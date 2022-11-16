@@ -1,4 +1,4 @@
-name: CROP_SMALL_128_nnu
+name: training_128_jz
 dbg: True
 gpu: 0
 use_gpu: True
@@ -19,8 +19,7 @@ do_clip: True
 do_schedul: True
 loss: CrossDice # Dice
 
-# pth: /etudiants/siscol/t/themyr_l/US
-pth: /local/DEEPLEARNING/20220318_US_DATA
+pth: /gpfsscratch/rech/arf/unm89rb/medseg_results
 
 augmentations:
   rotate:

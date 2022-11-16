@@ -46,11 +46,9 @@ from torch.utils.tensorboard import SummaryWriter
 import telegram_send as ts
 
 from einops import rearrange
-# import time
 
 import gc
-# V2 : add normalise intensity
-# V3 : william's data aug
+
 
 from tqdm import trange
 
@@ -76,7 +74,6 @@ class Trainer():
         self.use_gpu = cfg.training.use_gpu
         torch.backends.cudnn.benchmark = True
 
-        # Fix seed : TO DO
 
         # Hyperparameters
         log.debug("Hyperparameters")

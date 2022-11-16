@@ -1,8 +1,5 @@
 name: NNUNET
 model: nnunet
-# pth: /home/myr/these/datasets
-pth: /etudiants/siscol/t/themyr_l/US
-# pth: /scratch/lthemyr/US
 
 
 net_num_pool_op_kernel_sizes: [[2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2]]

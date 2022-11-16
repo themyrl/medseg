@@ -1,8 +1,8 @@
-name: US_128
+name: us_128_final_jz
 path: 
   pth: /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA
-  im: ${dataset.path.pth}/USimg_cropped128_npz
-  seg: ${dataset.path.pth}/USmask_cropped128_npz
+  im: ${dataset.path.pth}/USimg_128
+  seg: ${dataset.path.pth}/USmask_128
 
 im_size: [128,128,128]
 
