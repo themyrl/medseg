@@ -21,8 +21,6 @@ class CustomDataset(Dataset):
 		self.iterations = iterations
 		self.loader = LoadImage()
 		self.n_data = len(data)
-		log.debug("n_data", len(data))
-		log.debug("data", data)
 		self.transform = transform
 		self.log=log
 		self.type=type_
@@ -41,19 +39,15 @@ class CustomDataset(Dataset):
 		self.idx = -1
 
 	def __len__(self):
-		# self.log.debug("---- len start")
 		if self.type == 'train':
 			if self.iterations == 0:
 				return len(self.data)
-			# self.log.debug("---- len end 1")
 			return self.iterations
 		else:
-			# self.log.debug("---- len end 2")
 			return len(self.data)
 
 	def __getitem__(self, index):
 		log=self.log
-		log.debug("---- in the data getter")
 		if self.type == 'train':
 			if self.iterations == 0:
 				self.idx += 1
@@ -63,15 +57,12 @@ class CustomDataset(Dataset):
 		else:
 			self.idx += 1
 			i = self.idx
-		log.debug("---- here ok 1")
 
 		data_i = {}
-		log.debug("data shape", np.load(self.data[i]["image"])['arr_0'].shape)
 		data_i["image"] = rearrange(np.load(self.data[i]["image"])['arr_0'][None, ...], 'b x y z -> b z x y')
 		data_i["label"] = rearrange(np.load(self.data[i]["label"])['arr_0'][None, ...], 'b x y z -> b z x y')
 		data_i["id"] = [self.data[i]["image"].split('/')[-1].replace('img', 'xxx')]
 
-		log.debug("---- here ok 2")
 
 
 		shape = data_i["image"].shape
@@ -93,7 +84,6 @@ class CustomDataset(Dataset):
 				data_i = tmp if self.transform is not None else data_i
 		
 
-		log.debug("---- here ok 3")
 
 
 		data_i["center"] = np.array(centers)
@@ -107,7 +97,6 @@ class CustomDataset(Dataset):
 
 			data_i["label"] = downsample_seg_for_ds_transform3(data_i["label"][None,...].numpy(), deep_supervision_scales, classes=[0,1])
 
-		log.debug("---- here ok 4")
 
 
 		return data_i
