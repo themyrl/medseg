@@ -41,14 +41,14 @@ class CustomDataset(Dataset):
 		self.idx = -1
 
 	def __len__(self):
-		self.log.debug("---- len start")
+		# self.log.debug("---- len start")
 		if self.type == 'train':
 			if self.iterations == 0:
 				return len(self.data)
-			self.log.debug("---- len end 1")
+			# self.log.debug("---- len end 1")
 			return self.iterations
 		else:
-			self.log.debug("---- len end 2")
+			# self.log.debug("---- len end 2")
 			return len(self.data)
 
 	def __getitem__(self, index):
@@ -66,6 +66,7 @@ class CustomDataset(Dataset):
 		log.debug("---- here ok 1")
 
 		data_i = {}
+		log.debug("data shape", np.load(self.data[i]["image"])['arr_0'].shape)
 		data_i["image"] = rearrange(np.load(self.data[i]["image"])['arr_0'][None, ...], 'b x y z -> b z x y')
 		data_i["label"] = rearrange(np.load(self.data[i]["label"])['arr_0'][None, ...], 'b x y z -> b z x y')
 		data_i["id"] = [self.data[i]["image"].split('/')[-1].replace('img', 'xxx')]
