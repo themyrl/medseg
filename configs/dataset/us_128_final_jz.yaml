@@ -1,0 +1,12 @@
+name: US_128
+path: 
+  pth: /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA
+  im: ${dataset.path.pth}/USimg_cropped128_npz
+  seg: ${dataset.path.pth}/USmask_cropped128_npz
+
+im_size: [128,128,128]
+
+len: 39
+classes: 1
+
+cv: cv1

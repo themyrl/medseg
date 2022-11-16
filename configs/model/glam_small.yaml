@@ -1,0 +1,15 @@
+name: GLAM_SMALL
+model: glam
+# pth: /home/myr/these/datasets
+# pth: /etudiants/siscol/t/themyr_l/US
+pth: /scratch/lthemyr/US
+
+
+net_num_pool_op_kernel_sizes: [[2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2]]
+net_conv_kernel_sizes: [[3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3]]
+
+imsize: [128,128,128]
+embed_dim: 48
+num_heads: [3, 6, 12, 24]
+patch_size: [4,4,4]
+window_size: [4,4,8,4]

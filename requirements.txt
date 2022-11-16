@@ -1,0 +1,13 @@
+nibabel
+monai
+hydra-core
+tensorboard
+tqdm
+omegaconf
+termcolor
+nnunet==1.6.6
+batchgenerators==0.23
+einops
+timm
+telegram_send
+cachetools==4.2.2

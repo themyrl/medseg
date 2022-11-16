@@ -1,0 +1,7 @@
+----- 29 06 2022 -----
+#SBATCH --output=logs/nnunet_128on128.out # output file name
+#SBATCH --error=logs/nnunet_128on128.err  # error file name
+
+srun python main.py -m model=nnunet dataset=us128 training=crop128_128_128_nnu dataset.path.pth=/scratch/lthemyr/20220318_US_DATA training.pth=/scratch/lthemyr/20220318_US_DATA model.pth=/scratch/lthemyr/20220318_US_DATA
+
+--> Verify if nnunet still work well on IRCAD servers.

@@ -1,0 +1,9 @@
+dataset:
+  name: US
+model:
+  name: FINE
+training:
+  name: Default
+  lr: 0.1
+  epochs: 1000
+  iter: 250

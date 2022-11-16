@@ -1,0 +1,9 @@
+name: VNET
+model: vnet
+# pth: /home/myr/these/datasets
+pth: /etudiants/siscol/t/themyr_l/US
+# pth: /scratch/lthemyr/US
+
+
+net_num_pool_op_kernel_sizes: []
+net_conv_kernel_sizes: []

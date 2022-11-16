@@ -1,0 +1,134 @@
+dataset:
+  name: US
+  path:
+    pth: /home/myr/these/datasets/us_3d_segmentation_dataset_08_03_2022
+    im: ${dataset.path.pth}/USimg_cropped128
+    seg: ${dataset.path.pth}/USmask_cropped128
+  len: 55
+  split:
+    n_train: 44
+    n_val: 11
+    train:
+    - 26
+    - 49
+    - 27
+    - 11
+    - 7
+    - 5
+    - 53
+    - 46
+    - 32
+    - 1
+    - 17
+    - 48
+    - 14
+    - 50
+    - 2
+    - 40
+    - 3
+    - 29
+    - 10
+    - 18
+    - 41
+    - 36
+    - 47
+    - 37
+    - 52
+    - 38
+    - 33
+    - 34
+    - 54
+    - 4
+    - 35
+    - 25
+    - 6
+    - 12
+    - 30
+    - 16
+    - 8
+    - 21
+    - 28
+    - 22
+    - 20
+    - 23
+    - 42
+    - 43
+    val:
+    - 51
+    - 13
+    - 15
+    - 44
+    - 19
+    - 31
+    - 39
+    - 9
+    - 0
+    - 24
+    - 45
+  classes: 2
+model:
+  name: FINE
+  model: fine
+  inference:
+    path: /home/myr/these/datasets/${model.name}
+  checkpoint:
+    save: 1
+    load: false
+    load_path: /home/myr/these/datasets/${model.name}/checkpoint/latest.pt
+    path: /home/myr/these/datasets/${model.name}/checkpoint
+training:
+  name: Default
+  gpu: 0
+  use_gpu: false
+  lr: 0.01
+  weight_decay: 3.0e-05
+  epochs: 1000
+  iter: 250
+  batch_size: 1
+  num_workers: 1
+  crop_size:
+  - 96
+  - 96
+  - 96
+  net_num_pool_op_kernel_sizes:
+  - - 2
+    - 2
+    - 2
+  - - 2
+    - 2
+    - 2
+  - - 2
+    - 2
+    - 2
+  - - 2
+    - 2
+    - 2
+  - - 2
+    - 2
+    - 2
+  augmentations:
+    rotate:
+      x_:
+      - -0.5235987755982988
+      - 0.5235987755982988
+      y_:
+      - -0.5235987755982988
+      - 0.5235987755982988
+      z_:
+      - -0.5235987755982988
+      - 0.5235987755982988
+      p_: 0.2
+    scale:
+      min_: 0.7
+      max_: 1.4
+      p_: 0.2
+    gamma:
+      g_:
+      - 0.7
+      - 1.5
+      p_: 0.3
+  inference:
+    stride:
+    - 0.5
+    - 0.5
+    - 0.5
