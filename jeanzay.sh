@@ -29,3 +29,4 @@ module load python/3.8.8
 
 # Training
 srun python main.py -m model=nnunet dataset=us_128_final_jz training=training_128_jz dataset.cv=cv1
+
