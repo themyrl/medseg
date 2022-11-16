@@ -303,6 +303,9 @@ class Trainer():
                     for lab in range(len(labels)):
                         labels[lab] = labels[lab].cuda(0)
 
+
+                print("inputs" ,type(inputs))
+
                 output = self.model(inputs, centers)
 
                 del inputs
