@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=cotr     # job name
+#SBATCH --job-name=nnunet     # job name
 #SBATCH --ntasks=1                  # number of MP tasks
 #SBATCH --ntasks-per-node=1          # number of MPI tasks per node
 #SBATCH --gres=gpu:1                 # number of GPUs per node
@@ -7,9 +7,9 @@
 #SBATCH --hint=nomultithread         # we get physical cores not logical
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
 #SBATCH --time=48:00:00             # maximum execution time (HH:MM:SS)
-#SBATCH --qos=qos_gpu-t3
-#SBATCH --output=logs/cotr%j.out # output file name # add %j to id the job
-#SBATCH --error=logs/cotr%j.err  # error file name # add %j to id the job
+#SBATCH --qos=qos_gpu-t4
+#SBATCH --output=logs/nnunet%j.out # output file name # add %j to id the job
+#SBATCH --error=logs/nnunet%j.err  # error file name # add %j to id the job
 # # #   SBATCH -C v100-32g
 
 set -x
@@ -29,5 +29,5 @@ module load python/3.8.8
 
 
 # Training
-# python main.py -m model=nnunet dataset=us_128_final_jz training=training_128_jz dataset.cv=$1
-python main.py -m model=cotr dataset=us_128_final_jz training=training_128_jz dataset.cv=$1
+python main.py -m model=nnunet dataset=us_128_final_jz training=training_128_jz dataset.cv=$1
+# python main.py -m model=cotr dataset=us_128_final_jz training=training_128_jz dataset.cv=$1
