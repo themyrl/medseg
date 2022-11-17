@@ -99,7 +99,7 @@ class Trainer():
         self.img_size = cfg.dataset.im_size
 
         self.seg_path = cfg.dataset.path.seg
-        if "ct" in cfg.training.name:
+        if "ct" in cfg.dataset.name:
             self.train_split = create_split_v2(
                 cfg.dataset.path.im, cfg.dataset.path.seg, cv=cfg.dataset.cv, log=log, teuteu="_3_")
             self.val_split = create_split_v2(
