@@ -224,7 +224,7 @@ class Trainer():
             os.path.join(self.path, "checkpoint"))
         self.n_save = cfg.training.checkpoint.save
         self.do_load_checkpoint = cfg.training.checkpoint.load
-        self.load_path = os.path.join(self.path, "checkpoint", 'latest.pt')
+        self.load_path = os.path.join(self.path, "checkpoint", 'best.pt')
 
         self.model = import_model(cfg.model.model, dataset='US', num_classes=self.classes,
                                   num_pool=len(
