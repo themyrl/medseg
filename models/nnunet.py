@@ -52,10 +52,13 @@ class ConvDropoutNormNonlin(nn.Module):
         self.conv_op = conv_op
         self.norm_op = norm_op
 
+
+        if type(self.conv_kwargs['stride']) != type(1):
+            self.conv_kwargs['stride'] = tuple(self.conv_kwargs['stride'])
         print(self.conv_kwargs['stride'])
         print(type(self.conv_kwargs['stride']))
 
-        
+
 
 
         # exit(0)
