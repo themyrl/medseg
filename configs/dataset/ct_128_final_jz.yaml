@@ -1,0 +1,12 @@
+name: us_128_final_jz
+path: 
+  pth: /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA
+  im: ${dataset.path.pth}/CTimg_128
+  seg: ${dataset.path.pth}/CTmask_128
+
+im_size: [128,128,128]
+
+len: 39
+classes: 1
+
+cv: cv1
