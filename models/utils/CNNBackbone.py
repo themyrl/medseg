@@ -102,8 +102,8 @@ class Backbone(nn.Module):
         self.depth = depth
         block, layers = self.arch_settings[depth]
         self.inplanes = 64
-        self.conv1 = conv3x3x3(in_channels, 64, kernel_size=7, stride=(1, 2, 2), padding=3, bias=False, weight_std=weight_std)
-        # self.conv1 = conv3x3x3(in_channels, 64, kernel_size=7, stride=(2, 2, 2), padding=3, bias=False, weight_std=weight_std)
+        # self.conv1 = conv3x3x3(in_channels, 64, kernel_size=7, stride=(1, 2, 2), padding=3, bias=False, weight_std=weight_std)
+        self.conv1 = conv3x3x3(in_channels, 64, kernel_size=7, stride=(2, 2, 2), padding=3, bias=False, weight_std=weight_std)
         self.norm1 = Norm_layer(norm_cfg, 64)
         self.nonlin = Activation_layer(activation_cfg, inplace=True)
         self.layer1 = self._make_layer(block, 192, layers[0], stride=(2, 2, 2), norm_cfg=norm_cfg, activation_cfg=activation_cfg, weight_std=weight_std)
