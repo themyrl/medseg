@@ -6,7 +6,7 @@
 #SBATCH --cpus-per-task=10           # number of cores per tasks
 #SBATCH --hint=nomultithread         # we get physical cores not logical
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
-#SBATCH --time=00:02:00             # maximum execution time (HH:MM:SS)
+#SBATCH --time=00:10:00             # maximum execution time (HH:MM:SS)
 #SBATCH --qos=qos_gpu-dev
 #SBATCH --output=logs/debug%j.out # output file name # add %j to id the job
 #SBATCH --error=logs/debug%j.err  # error file name # add %j to id the job
@@ -29,4 +29,4 @@ module load python/3.8.8
 
 
 # Training
-python main.py -m model=nnunet dataset=us_128_final_jz training=training_128_jz dataset.cv=$1
+python main.py -m model=nnunet dataset=us_128_final_jz training=training_128_jz dataset.cv=$1 training.checkpoint.load=True
