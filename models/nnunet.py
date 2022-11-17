@@ -55,8 +55,8 @@ class ConvDropoutNormNonlin(nn.Module):
 
         if type(self.conv_kwargs['stride']) != type(1):
             self.conv_kwargs['stride'] = tuple(self.conv_kwargs['stride'])
-        print(self.conv_kwargs['stride'])
-        print(type(self.conv_kwargs['stride']))
+        # print(self.conv_kwargs['stride'])
+        # print(type(self.conv_kwargs['stride']))
 
 
 
@@ -72,7 +72,7 @@ class ConvDropoutNormNonlin(nn.Module):
         self.lrelu = self.nonlin(**self.nonlin_kwargs)
 
     def forward(self, x):
-        print("forward stride" ,self.conv.stride)
+        # print("forward stride" ,self.conv.stride)
         x = self.conv(x)
         if self.dropout is not None:
             x = self.dropout(x)
@@ -361,7 +361,7 @@ class model(SegmentationNetwork):
                 self.tu.append(Upsample(scale_factor=pool_op_kernel_sizes[-(u + 1)], mode=upsample_mode))
             else:
                 self.tu.append(transpconv(nfeatures_from_down, nfeatures_from_skip, pool_op_kernel_sizes[-(u + 1)],
-                                          pool_op_kernel_sizes[-(u + 1)], bias=False))
+                                          tuple(pool_op_kernel_sizes[-(u + 1)]), bias=False))
 
             self.conv_kwargs['kernel_size'] = self.conv_kernel_sizes[- (u + 1)]
             self.conv_kwargs['padding'] = self.conv_pad_sizes[- (u + 1)]
