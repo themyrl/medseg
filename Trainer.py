@@ -290,7 +290,7 @@ class Trainer():
             log.debug('epoch{}'.format(epoch))
 
             for batch_data in tqdm(self.train_loader):
-                log.debug('batch loaded')
+                # log.debug('batch loaded')
                 btc += 1
                 self.optimizer.zero_grad()
 
@@ -304,7 +304,7 @@ class Trainer():
                         labels[lab] = labels[lab].cuda(0)
 
 
-                log.debug("inputs" ,type(inputs))
+                # log.debug("inputs" ,type(inputs))
 
                 output = self.model(inputs, centers)
 
