@@ -143,7 +143,7 @@ def create_split_v2(im_pth, seg_pth, val=False, cv='cv1', log=None, teuteu="3_",
 
 	splits=[]
 	for spl in split:
-		# log.debug("file 	", os.path.join(im_pth,spl+'_img128.npz'))
+		log.debug("file 	", os.path.join(im_pth,spl+teuteu+'img.npz'))
 		if os.path.exists(os.path.join(im_pth,spl+teuteu+'img.npz')):
 			tmp = {
 					'image': os.path.join(im_pth,spl+teuteu+'img.npz'),
