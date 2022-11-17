@@ -355,7 +355,7 @@ class Trainer():
                     include_background=True, reduction="mean")
                 post_trans = Compose(
                     [Activations(sigmoid=True), AsDiscrete(
-                        threshold_values=True)]
+                        threshold=True)]
                 )
                 with torch.no_grad():
                     for batch_data in tqdm(self.val_loader):
@@ -422,7 +422,7 @@ class Trainer():
         log = self.log
         self.load_checkpoint(os.path.join(self.path, "checkpoint", 'best.pt'))
         post_trans = Compose(
-            [Activations(sigmoid=True), AsDiscrete(threshold_values=True)]
+            [Activations(sigmoid=True), AsDiscrete(threshold=True)]
         )
 
         # l_val = 0
