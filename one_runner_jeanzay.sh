@@ -1,15 +1,15 @@
 #!/bin/bash
-#SBATCH --job-name=debug     # job name
+#SBATCH --job-name=nnunet     # job name
 #SBATCH --ntasks=1                  # number of MP tasks
 #SBATCH --ntasks-per-node=1          # number of MPI tasks per node
 #SBATCH --gres=gpu:1                 # number of GPUs per node
 #SBATCH --cpus-per-task=10           # number of cores per tasks
 #SBATCH --hint=nomultithread         # we get physical cores not logical
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
-#SBATCH --time=00:10:00             # maximum execution time (HH:MM:SS)
-#SBATCH --qos=qos_gpu-dev
-#SBATCH --output=logs/debug%j.out # output file name # add %j to id the job
-#SBATCH --error=logs/debug%j.err  # error file name # add %j to id the job
+#SBATCH --time=48:00:00             # maximum execution time (HH:MM:SS)
+#SBATCH --qos=qos_gpu-t3
+#SBATCH --output=logs/nnunet%j.out # output file name # add %j to id the job
+#SBATCH --error=logs/nnunet%j.err  # error file name # add %j to id the job
 # # #   SBATCH -C v100-32g
 
 set -x
@@ -29,4 +29,4 @@ module load python/3.8.8
 
 
 # Training
-python main.py -m model=nnunet dataset=us_128_final_jz training=training_128_jz dataset.cv=$1 training.only_val=True
+python main.py -m model=nnunet dataset=us_128_final_jz training=training_128_jz dataset.cv=$1
