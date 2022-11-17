@@ -210,8 +210,7 @@ class Trainer():
                                  iterations=0, crop_size=self.crop_size, log=log, type_='test')
         
 
-        self.log.debug("self.train_split",self.train_split)
-        exit(0)
+        
 
         if self.online_validation:
             valData = CustomDataset(self.val_split, transform=val_transforms,
