@@ -41,5 +41,5 @@ inference:
 checkpoint:
   save: 10
   load: False
-  load_path: ${model.pth}/${model.name}/checkpoint/latest.pt
+  load_path: ${model.pth}/${model.name}/checkpoint/best.pt
   path: ${model.pth}/${model.name}/checkpoint
