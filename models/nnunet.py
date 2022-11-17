@@ -66,6 +66,7 @@ class ConvDropoutNormNonlin(nn.Module):
         self.lrelu = self.nonlin(**self.nonlin_kwargs)
 
     def forward(self, x):
+        print("forward stride" ,self.conv.stride)
         x = self.conv(x)
         if self.dropout is not None:
             x = self.dropout(x)
