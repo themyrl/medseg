@@ -101,9 +101,9 @@ class Trainer():
         self.seg_path = cfg.dataset.path.seg
         if "ct" in cfg.dataset.name:
             self.train_split = create_split_v2(
-                cfg.dataset.path.im, cfg.dataset.path.seg, cv=cfg.dataset.cv, log=log, teuteu="_3_")
+                cfg.dataset.path.im, cfg.dataset.path.seg, cv=cfg.dataset.cv, log=log, data="ct")
             self.val_split = create_split_v2(
-                cfg.dataset.path.im, cfg.dataset.path.seg, cv=cfg.dataset.cv, val=True, log=log, teuteu="_3_")
+                cfg.dataset.path.im, cfg.dataset.path.seg, cv=cfg.dataset.cv, val=True, log=log, data="ct")
         else:
             self.train_split = create_split_v2(
                 cfg.dataset.path.im, cfg.dataset.path.seg, cv=cfg.dataset.cv, log=log)
