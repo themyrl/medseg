@@ -52,9 +52,11 @@ class ConvDropoutNormNonlin(nn.Module):
         self.conv_op = conv_op
         self.norm_op = norm_op
 
-        print(self.conv_kwargs['stride'])
+        # print(self.conv_kwargs['stride'])
 
-        exit(0)
+        self.conv_kwargs['stride'] = (self.conv_kwargs['stride'],self.conv_kwargs['stride'],self.conv_kwargs['stride'])
+
+        # exit(0)
         self.conv = self.conv_op(input_channels, output_channels, **self.conv_kwargs)
         if self.dropout_op is not None and self.dropout_op_kwargs['p'] is not None and self.dropout_op_kwargs[
             'p'] > 0:
