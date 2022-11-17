@@ -93,7 +93,7 @@ class U_ResTran3D(nn.Module):
         # if img_size[0] == img_size[1]:
         #     self.upsamplex2 = nn.Upsample(scale_factor=(2,2,2), mode='trilinear')
         # else:
-        self.upsamplex2 = nn.Upsample(scale_factor=(1,2,2), mode='trilinear')
+        self.upsamplex2 = nn.Upsample(scale_factor=(2,2,2), mode='trilinear')
 
         self.transposeconv_stage2 = nn.ConvTranspose3d(384, 384, kernel_size=(2,2,2), stride=(2,2,2), bias=False)
         self.transposeconv_stage1 = nn.ConvTranspose3d(384, 192, kernel_size=(2,2,2), stride=(2,2,2), bias=False)
