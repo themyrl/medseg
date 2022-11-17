@@ -447,6 +447,8 @@ class Trainer():
 
                 # pred_nib = nib.Nifti1Image(prediction.numpy(), None)
                 # nib.save(pred_nib, file)
+                log.debug("file", file)
+                log.debug("idx", idx)
                 np.savez(file, prediction.numpy())
             # l_val = l_val/len_val
 
