@@ -32,4 +32,4 @@ module load python/3.8.8
 # python main.py -m model=nnunet dataset=us_128_final_jz training=training_128_jz dataset.cv=$1
 # python main.py -m model=cotr dataset=us_128_final_jz training=training_128_jz dataset.cv=$1
 
-python main.py -m model=nnunet dataset=ct_128_final_jz training=training_128_jz dataset.cv=$1
+python main.py -m model=nnunet dataset=ct_128_final_jz training=training_128_jz dataset.cv=$1 training.only_val=True
