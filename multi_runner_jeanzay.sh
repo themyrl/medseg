@@ -1,9 +1,9 @@
 #!/bin/bash
 
 
-JOBID=$(sbatch --parsable  test_depend.sh 0)
+JOBID=$(sbatch --parsable  one_runner_jeanzay.sh cv1)
 
-for i in $(seq 1 10);
+for i in $(seq 2 5);
 do
-  	JOBID=$(sbatch --parsable --dependency=afterany:${JOBID} test_depend.sh ${i})
+  	JOBID=$(sbatch --parsable --dependency=afterany:${JOBID} one_runner_jeanzay.sh cv${i})
 done
