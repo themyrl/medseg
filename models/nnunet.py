@@ -53,6 +53,9 @@ class ConvDropoutNormNonlin(nn.Module):
         self.norm_op = norm_op
 
         print(self.conv_kwargs['stride'])
+        print(type(self.conv_kwargs['stride']))
+
+        
 
 
         # exit(0)
