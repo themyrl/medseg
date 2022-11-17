@@ -8,8 +8,8 @@
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
 #SBATCH --time=00:05:00             # maximum execution time (HH:MM:SS)
 #SBATCH --qos=qos_gpu-dev
-#SBATCH --output=logs/ctnnunet%j.out # output file name # add %j to id the job
-#SBATCH --error=logs/ctnnunet%j.err  # error file name # add %j to id the job
+#SBATCH --output=logs/ctnnunet.out # output file name # add %j to id the job
+#SBATCH --error=logs/ctnnunet.err  # error file name # add %j to id the job
 # # #   SBATCH -C v100-32g
 
 set -x

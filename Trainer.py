@@ -110,6 +110,9 @@ class Trainer():
             self.val_split = create_split_v2(
                 cfg.dataset.path.im, cfg.dataset.path.seg, cv=cfg.dataset.cv, val=True, log=log)
 
+
+
+
         train_transforms = None
         test_transforms = None
         val_transforms = None
@@ -205,6 +208,11 @@ class Trainer():
                                   crop_size=self.crop_size, log=log, net_num_pool_op_kernel_sizes=self.net_num_pool_op_kernel_sizes)
         testData = CustomDataset(self.val_split, transform=test_transforms,
                                  iterations=0, crop_size=self.crop_size, log=log, type_='test')
+        
+
+        self.log.debug("self.train_split",self.train_split)
+        exit(0)
+
         if self.online_validation:
             valData = CustomDataset(self.val_split, transform=val_transforms,
                                     iterations=0, crop_size=self.crop_size, log=log, type_='val')
