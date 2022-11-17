@@ -317,13 +317,13 @@ class Trainer():
                 # exit(0)
                 gc.collect()
 
-                log.debug('len output', len(output))
-                log.debug('len labels', len(labels))
-                for ii in range(len(output)):
-                  log.debug("output[{}]".format(ii), output[ii].shape)
-                  log.debug("output[{}]".format(ii), type(output[ii]))
-                  log.debug("labels[{}]".format(ii), labels[ii].shape)
-                  log.debug("labels[{}]".format(ii), type(labels[ii]))
+                # log.debug('len output', len(output))
+                # log.debug('len labels', len(labels))
+                # for ii in range(len(output)):
+                #   log.debug("output[{}]".format(ii), output[ii].shape)
+                #   log.debug("output[{}]".format(ii), type(output[ii]))
+                #   log.debug("labels[{}]".format(ii), labels[ii].shape)
+                #   log.debug("labels[{}]".format(ii), type(labels[ii]))
 
         
                 l = self.loss(output, labels)

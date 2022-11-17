@@ -29,4 +29,4 @@ module load python/3.8.8
 
 
 # Training
-python main.py -m model=nnunet dataset=us_128_final_jz training=training_128_jz dataset.cv=$1 training.checkpoint.load=True
+python main.py -m model=nnunet dataset=us_128_final_jz training=training_128_jz dataset.cv=$1 training.only_val=True
