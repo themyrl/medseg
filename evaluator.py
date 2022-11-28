@@ -112,14 +112,20 @@ if __name__ == '__main__':
 		main(args.pred_pth, args.gt_pth, args.out_pth)
 	else:
 			
-		pred_pth = "/scratch/lthemyr/20220318_US_DATA/US_256/CROP_SMALL_64_nnu"
+		# pred_pth = "/scratch/lthemyr/20220318_US_DATA/US_256/CROP_SMALL_64_nnu"
+		pred_pth = ["/gpfsscratch/rech/arf/unm89rb/medseg_results/us_128_final_jz/training_128_jz", 
+					"/gpfsscratch/rech/arf/unm89rb/medseg_results/ct_128_final_jz/training_128_jz"]
+		gts = ["/gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask", 
+			   "/gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask"]
 		model = {
-				"NNUNET":["cv1"]#,"cv2","cv3","cv4", "cv5"],
-				# "COTR_64":["cv1","cv2","cv3","cv4"]
+				"NNUNET":["cv1", "cv2", "cv3", "cv4", "cv5"],
+				"COTR"  :["cv1", "cv2", "cv3", "cv4", "cv5"]
 				}
-		for k in list(model.keys()):
-			for i in model[k]:
-				main(os.path.join(pred_pth, k, i), args.gt_pth, "")
+		for p in range(2):
+			for k in list(model.keys()):
+				for i in model[k]:
+					# main(os.path.join(pred_pth[p], k, i), args.gt_pth, "")
+					main(os.path.join(pred_pth[p], k, i), gts[p], "")
 
 
 
