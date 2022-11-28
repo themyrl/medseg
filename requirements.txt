@@ -11,3 +11,4 @@ einops
 timm
 telegram_send
 cachetools==4.2.2
+cc3d

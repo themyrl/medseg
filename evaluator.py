@@ -11,6 +11,7 @@ import cc3d
 import argparse
 import os
 import json
+import gc
 
 
 def post_proc(pred):
@@ -83,6 +84,9 @@ def main(pred_pth, gt_pth, out_pth):
 			avg_dsc = [avg_dsc[i]+dsc[i] for i in range(classes)]
 			avg_hd95 += hd95
 			N +=1
+
+			del pred, gt
+			gc.collect()
 
 	avg_dsc = [avg_dsc[i]/N for i in range(classes)]
 	avg_hd95 /= N
