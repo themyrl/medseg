@@ -154,12 +154,12 @@ class Trainer():
             [
                 # CropForegroundd(keys=["image", "label"], source_key="image"),
                 Resized(keys=["image", "label"], spatial_size=self.img_size),
-                RandCropByLabelClassesd(keys=["image", "label"],
-                                        label_key="label",
-                                        spatial_size=self.crop_size,
-                                        num_classes=cfg.dataset.classes + 1,
-                                        num_samples=1
-                                        ),
+                # RandCropByLabelClassesd(keys=["image", "label"],
+                #                         label_key="label",
+                #                         spatial_size=self.crop_size,
+                #                         num_classes=cfg.dataset.classes + 1,
+                #                         num_samples=1
+                #                         ),
                 mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True)
                 # RandSpatialCropd(keys=["image", "label"],
                 #               roi_size=self.crop_size,
@@ -171,7 +171,7 @@ class Trainer():
                 # load 4 Nifti images and stack them together
                 # LoadImaged(keys=["image", "label"]),
                 # AddChanneld(keys=["image", "label"]),
-                # CropForegroundd(keys=["image", "label"], source_key="image"),
+                CropForegroundd(keys=["image", "label"], source_key="image"),
                 RandFlipd(keys=["image", "label"], prob=0.5, spatial_axis=0),
                 RandFlipd(keys=["image", "label"], prob=0.5, spatial_axis=1),
                 RandFlipd(keys=["image", "label"], prob=0.5, spatial_axis=2),
@@ -183,7 +183,7 @@ class Trainer():
                             mode=('bilinear', 'nearest'),
                             prob=1.0),
                 Resized(
-                    keys=["image", "label"], spatial_size=self.img_size
+                    keys=["image", "label"], spatial_size=self.img_size, mode=("trilinear", "nearest")
                 ),
                 mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
                 RandScaleIntensityd(keys="image", factors=0.1, prob=0.5),
@@ -196,12 +196,12 @@ class Trainer():
                 # RandSpatialCropd(keys=["image", "label"],
                 #   roi_size=self.crop_size,
                 #   random_size=False),
-                RandCropByLabelClassesd(keys=["image", "label"],
-                                        label_key="label",
-                                        spatial_size=self.crop_size,
-                                        num_classes=cfg.dataset.classes + 1,
-                                        num_samples=1
-                                        )
+                # RandCropByLabelClassesd(keys=["image", "label"],
+                #                         label_key="label",
+                #                         spatial_size=self.crop_size,
+                #                         num_classes=cfg.dataset.classes + 1,
+                #                         num_samples=1
+                #                         )
                 # ToTensord(keys=["image", "label"]),
             ]
         )
