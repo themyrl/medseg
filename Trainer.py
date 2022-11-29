@@ -159,7 +159,8 @@ class Trainer():
                                         spatial_size=self.crop_size,
                                         num_classes=cfg.dataset.classes + 1,
                                         num_samples=1
-                                        )
+                                        ),
+                mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True)
                 # RandSpatialCropd(keys=["image", "label"],
                 #               roi_size=self.crop_size,
                 #               random_size=False),
@@ -184,6 +185,7 @@ class Trainer():
                 Resized(
                     keys=["image", "label"], spatial_size=self.img_size
                 ),
+                mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
                 RandScaleIntensityd(keys="image", factors=0.1, prob=0.5),
                 RandShiftIntensityd(keys="image", offsets=0.1, prob=0.5),
                 mt.RandGaussianNoised(

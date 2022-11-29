@@ -17,6 +17,13 @@ def main(argv, arc):
 
 	path = argv[1]
 	out_path = argv[2]
+	mode = argv[3]
+	if mode == "t":
+		mode = "trilinear"
+	if mode == "n":
+		mode = "nearest"
+	if mode == "a":
+		mode = "area"
 	size = None
 	if len(argv)==4:
 		size = [int(argv[3])for i in range(3)]
@@ -34,7 +41,7 @@ def main(argv, arc):
 			out_f = f.replace(".nii.gz", ".npz")
 			if size != None:
 				x = torch.from_numpy(x)
-				x = T.Resize(size, mode="nearest")(x[None, ...])[0,...]
+				x = T.Resize(size, mode=mode, align_corners=True)(x[None, ...])[0,...]
 				x = x.numpy()
 				# x = x[0,...].numpy()
 			np.savez(os.path.join(out_path, out_f), x)
