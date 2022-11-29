@@ -1,16 +1,16 @@
 #!/bin/bash
-#SBATCH --job-name=eval     # job name
+#SBATCH --job-name=dataset     # job name
 #SBATCH --ntasks=1                  # number of MP tasks
 #SBATCH --ntasks-per-node=1          # number of MPI tasks per node
 #SBATCH --gres=gpu:1                 # number of GPUs per node
 #SBATCH --cpus-per-task=10           # number of cores per tasks
 #SBATCH --hint=nomultithread         # we get physical cores not logical
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
-#SBATCH --time=12:00:00             # maximum execution time (HH:MM:SS)
+#SBATCH --time=02:00:00             # maximum execution time (HH:MM:SS)
 #SBATCH --qos=qos_gpu-t4
-#SBATCH --output=logs/eval.out # output file name # add %j to id the job
-#SBATCH --error=logs/eval.err  # error file name # add %j to id the job
-#SBATCH -C v100-32g
+#SBATCH --output=logs/dataset.out # output file name # add %j to id the job
+#SBATCH --error=logs/dataset.err  # error file name # add %j to id the job
+#   SBATCH -C v100-32g
 
 set -x
 
