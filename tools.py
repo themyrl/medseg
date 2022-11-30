@@ -197,8 +197,8 @@ def create_split_v3(im_pth, seg_pth, val=False, cv='cv1', log=None, data="us",*a
 		if os.path.exists(os.path.join(im_pth,spl+teuteu+'img.npz')):
 			tmp = {
 					'image': os.path.join(im_pth,spl+teuteu+'img.npz'),
-					'label2' : os.path.join(seg_pth[0],spl+'_Vol.npz'),
-					'label3' : os.path.join(seg_pth[1],spl+'_Vol.npz'),
+					'label2' : os.path.join(seg_pth[0],spl+'2_Vol.npz'),
+					'label3' : os.path.join(seg_pth[1],spl+'3_Vol.npz'),
 					'label': os.path.join(seg_pth[2],spl+'_Vol.npz'),
 					'id': spl
 					}
