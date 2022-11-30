@@ -203,6 +203,7 @@ def create_split_v3(im_pth, seg_pth, val=False, cv='cv1', log=None, data="us",*a
 					'label': os.path.join(seg_pth[2],spl+'_Vol.npz'),
 					'id': spl
 					}
+			log.debug('paths and ids', tmp)
 			splits.append(tmp)
 
 	return splits
