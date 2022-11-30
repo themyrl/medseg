@@ -38,7 +38,7 @@ module load python/3.8.8
 
 ## multi anno
 # python mainDouble.py -m model=nnunet dataset=us_128_double_jz training=training_128_jz dataset.cv=$1 #m_usnn
-python main.py -m model=cotr dataset=us_128_double_jz training=training_128_jz dataset.cv=$1 #m_usco
+python mainDouble.py -m model=cotr dataset=us_128_double_jz training=training_128_jz dataset.cv=$1 #m_usco
 
-# python main.py -m model=nnunet dataset=ct_128_final_jz training=training_128_jz dataset.cv=$1
-# python main.py -m model=cotr dataset=ct_128_final_jz training=training_128_jz dataset.cv=$1
+# python mainDouble.py -m model=nnunet dataset=ct_128_final_jz training=training_128_jz dataset.cv=$1 #m_ctnn
+# python mainDouble.py -m model=cotr dataset=ct_128_final_jz training=training_128_jz dataset.cv=$1 #m_ctco
