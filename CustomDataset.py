@@ -62,6 +62,7 @@ class CustomDataset(Dataset):
 			i = self.idx
 
 		data_i = {}
+		# log.debug("pth", self.data[i])
 		data_i["image"] = rearrange(np.load(self.data[i]["image"])['arr_0'][None, ...], 'b x y z -> b z x y')
 		data_i["label"] = rearrange(np.load(self.data[i]["label"])['arr_0'][None, ...], 'b x y z -> b z x y')
 		if self.multi_anno:
