@@ -195,7 +195,7 @@ def create_split_v3(im_pth, seg_pth, val=False, cv='cv1', log=None, data="us",*a
 	splits=[]
 	for spl in split:
 		log.debug("file 	", os.path.join(im_pth,spl+teuteu+'img.npz'))
-		if os.path.exists(os.path.join(im_pth,spl+teuteu+'img.npz')):
+		if os.path.exists(os.path.join(im_pth,spl+teuteu+'3_img.npz')):
 			tmp = {
 					'image': os.path.join(im_pth,spl+teuteu+'3_img.npz'),
 					'label2' : os.path.join(seg_pth[0],spl+teuteu+'2_Vol.npz'),
@@ -203,7 +203,7 @@ def create_split_v3(im_pth, seg_pth, val=False, cv='cv1', log=None, data="us",*a
 					'label': os.path.join(seg_pth[2],spl+'_Vol.npz'),
 					'id': spl
 					}
-			log.debug('paths and ids', tmp)
+			# log.debug('paths and ids', tmp)
 			splits.append(tmp)
 
 	return splits
