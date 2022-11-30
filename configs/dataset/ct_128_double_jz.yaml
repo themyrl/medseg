@@ -1,7 +1,7 @@
 name: ct_128_final_jz
 path: 
   pth: /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA
-  im: ${dataset.path.pth}/CTimg_128
+  im: ${dataset.path.pth}/CTimg_128_t
   seg2: ${dataset.path.pth}/CTmask_a2_128
   seg3: ${dataset.path.pth}/CTmask_a3_128
   seg23: ${dataset.path.pth}/CTmask_mf_128

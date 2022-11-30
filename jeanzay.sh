@@ -38,7 +38,8 @@ module load python/3.8.8
 
 
 # Training
-python mainDouble.py -m model=nnunet dataset=us_128_double_jz training=training_128_jz dataset.cv=cv1
+# python mainDouble.py -m model=nnunet dataset=us_128_double_jz training=training_128_jz dataset.cv=cv1
+python mainDouble.py -m model=nnunet dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1
 
 
 # Evaluation
