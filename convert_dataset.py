@@ -41,7 +41,10 @@ def main(argv, arc):
 			out_f = f.replace(".nii.gz", ".npz")
 			if size != None:
 				x = torch.from_numpy(x)
-				x = T.Resize(size, mode=mode, align_corners=True)(x[None, ...])[0,...]
+				if mode == 'trilinear':
+					x = T.Resize(size, mode=mode, align_corners=True)(x[None, ...])[0,...]
+				else:
+					x = T.Resize(size, mode=mode)(x[None, ...])[0,...]
 				x = x.numpy()
 				# x = x[0,...].numpy()
 			np.savez(os.path.join(out_path, out_f), x)
