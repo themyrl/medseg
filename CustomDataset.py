@@ -51,6 +51,7 @@ class CustomDataset(Dataset):
 
 	def __getitem__(self, index):
 		log=self.log
+		log.debug("data", self.data)
 		if self.type == 'train':
 			if self.iterations == 0:
 				self.idx += 1
