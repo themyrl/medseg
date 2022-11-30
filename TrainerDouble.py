@@ -30,7 +30,7 @@ import monai.transforms as mt
 # from monai.inferers import sliding_window_inference
 from monai.metrics import compute_meandice, compute_hausdorff_distance, DiceMetric
 
-from tools import create_split_v2, import_model, get_loss, poly_lr, create_path_if_not_exists, _to_one_hot, CustomDice
+from tools import create_split_v3, import_model, get_loss, poly_lr, create_path_if_not_exists, _to_one_hot, CustomDice
 from CustomTransform import CustomRandScaleCropd, CustomRandCropByPosNegLabeld
 from CustomDataset import CustomDataset
 
@@ -98,17 +98,18 @@ class Trainer():
         self.eval_step = cfg.training.eval_step
         self.img_size = cfg.dataset.im_size
 
-        self.seg_path = cfg.dataset.path.seg
+        self.seg_path = [cfg.dataset.path.seg2, cfg.dataset.path.seg3, cfg.dataset.path.seg23]
         if "ct" in cfg.dataset.name:
-            self.train_split = create_split_v2(
-                cfg.dataset.path.im, cfg.dataset.path.seg, cv=cfg.dataset.cv, log=log, data="ct")
-            self.val_split = create_split_v2(
-                cfg.dataset.path.im, cfg.dataset.path.seg, cv=cfg.dataset.cv, val=True, log=log, data="ct")
+            self.train_split = create_split_v3(
+                cfg.dataset.path.im, self.seg_path, cv=cfg.dataset.cv, log=log, data="ct")
+            self.val_split = create_split_v3(
+                cfg.dataset.path.im, self.seg_path, cv=cfg.dataset.cv, val=True, log=log, data="ct")
         else:
-            self.train_split = create_split_v2(
-                cfg.dataset.path.im, cfg.dataset.path.seg, cv=cfg.dataset.cv, log=log)
-            self.val_split = create_split_v2(
-                cfg.dataset.path.im, cfg.dataset.path.seg, cv=cfg.dataset.cv, val=True, log=log)
+            self.train_split = create_split_v3(
+                cfg.dataset.path.im, self.seg_path, cv=cfg.dataset.cv, log=log)
+            self.val_split = create_split_v3(
+                cfg.dataset.path.im, self.seg_path, cv=cfg.dataset.cv, val=True, log=log)
+
 
 
 
@@ -117,43 +118,11 @@ class Trainer():
         test_transforms = None
         val_transforms = None
 
-        # train_transforms = Compose([
-        #           RandRotated(keys=["image", "label"],
-        #                       range_x=cfg.training.augmentations.rotate.x_,
-        #                       range_y=cfg.training.augmentations.rotate.y_,
-        #                       range_z=cfg.training.augmentations.rotate.z_,
-        #                       prob=cfg.training.augmentations.rotate.p_),
-        #           # CustomRandScaleCropd(keys=["image", "label"],
-        #           #                    roi_scale=cfg.training.augmentations.scale.min_,
-        #           #                    max_roi_scale=cfg.training.augmentations.scale.max_,
-        #           #                    prob=1,)#cfg.training.augmentations.scale.p_,)
-        #           #                    # random_size=False),
-        #           NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
 
-        #           RandAdjustContrastd(keys=["image", "label"],
-        #                               prob=cfg.training.augmentations.gamma.p_,
-        #                               gamma=cfg.training.augmentations.gamma.g_),
-
-        #   ])
-
-        # train_transforms = Compose([
-        #           RandFlipd(keys=["image", "label"], prob=0.5, spatial_axis=0),
-        #           RandAffineD(keys=["image", "label"],
-        #               rotate_range=(np.pi/36, np.pi/36, np.pi/36),
-        #               translate_range=(5, 5, 5),
-        #               padding_mode="border",
-        #               scale_range=(0.15, 0.15, 0.15),
-        #               mode=('bilinear', 'nearest'),
-        #               prob=1.0),
-        #           NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
-        #           RandScaleIntensityd(keys="image", factors=0.1, prob=0.5),
-        #           RandShiftIntensityd(keys="image", offsets=0.1, prob=0.5)
-
-        #   ])
         val_transforms = Compose(
             [
                 # CropForegroundd(keys=["image", "label"], source_key="image"),
-                Resized(keys=["image", "label"], spatial_size=self.img_size),
+                Resized(keys=["image", "label", "label2", "label3"], spatial_size=self.img_size),
                 # RandCropByLabelClassesd(keys=["image", "label"],
                 #                         label_key="label",
                 #                         spatial_size=self.crop_size,
@@ -171,20 +140,18 @@ class Trainer():
                 # load 4 Nifti images and stack them together
                 # LoadImaged(keys=["image", "label"]),
                 # AddChanneld(keys=["image", "label"]),
-                CropForegroundd(keys=["image", "label"], source_key="image"),
-                RandFlipd(keys=["image", "label"], prob=0.25, spatial_axis=0),
-                RandFlipd(keys=["image", "label"], prob=0.25, spatial_axis=1),
-                RandFlipd(keys=["image", "label"], prob=0.25, spatial_axis=2),
+                CropForegroundd(keys=["image", "label", "label2", "label3"], source_key="image"),
+                RandFlipd(keys=["image", "label", "label2", "label3"], prob=0.25, spatial_axis=0),
+                RandFlipd(keys=["image", "label", "label2", "label3"], prob=0.25, spatial_axis=1),
+                RandFlipd(keys=["image", "label", "label2", "label3"], prob=0.25, spatial_axis=2),
                 RandAffined(keys=["image", "label"],
                             rotate_range=(np.pi, np.pi, np.pi),
                             translate_range=(50, 50, 50),
                             padding_mode="border",
                             scale_range=(0.25, 0.25, 0.25),
-                            mode=('bilinear', 'nearest'),
+                            mode=('bilinear', 'nearest', 'nearest', 'nearest'),
                             prob=1.0),
-                Resized(
-                    keys=["image", "label"], spatial_size=self.img_size, mode=("trilinear", "nearest")
-                ),
+                Resized(keys=["image", "label"], spatial_size=self.img_size, mode="trilinear"),
                 mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
                 RandScaleIntensityd(keys="image", factors=0.1, prob=0.5),
                 RandShiftIntensityd(keys="image", offsets=0.1, prob=0.5),
@@ -311,12 +278,16 @@ class Trainer():
 
                 inputs = batch_data["image"]
                 labels = batch_data["label"]
+                labels2 = batch_data["label2"]
+                labels3 = batch_data["label3"]
                 centers = batch_data["center"]
 
                 if torch.cuda.is_available() and self.use_gpu:
                     inputs = inputs.float().cuda(0)
                     for lab in range(len(labels)):
                         labels[lab] = labels[lab].cuda(0)
+                        labels2[lab] = labels2[lab].cuda(0)
+                        labels3[lab] = labels3[lab].cuda(0)
 
 
                 # log.debug("inputs" ,type(inputs))
@@ -326,9 +297,13 @@ class Trainer():
                 del inputs
                 if len(self.net_num_pool_op_kernel_sizes) == 0:
                     labels = labels.cuda(0)
+                    labels2 = labels2.cuda(0)
+                    labels3 = labels3.cuda(0)
                 if self._loss == "Dice" and type(output) == tuple:
                     output = output[0]
                     labels = labels[0]
+                    labels2 = labels2[0]
+                    labels3 = labels3[0]
                 # exit(0)
                 gc.collect()
 
@@ -341,7 +316,8 @@ class Trainer():
                 #   log.debug("labels[{}]".format(ii), type(labels[ii]))
 
         
-                l = self.loss(output, labels)
+                # l = self.loss(output, labels)
+                l = (self.loss(output, labels2) + self.loss(output, labels3))/2
                 l_train += l.detach().cpu().numpy()
 
                 gc.collect()
@@ -357,7 +333,13 @@ class Trainer():
                 del output
                 for lab in labels:
                     del lab
+                for lab in labels2:
+                    del lab
+                for lab in labels3:
+                    del lab
                 del labels
+                del labels2
+                del labels3
 
                 gc.collect()
 

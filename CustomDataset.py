@@ -16,7 +16,7 @@ import torch
 # import time
 
 class CustomDataset(Dataset):
-	def __init__(self, data, transform=None, iterations=250, crop_size=[128,128,128], log=None, net_num_pool_op_kernel_sizes=[], type_='train', *args, **kwargs):
+	def __init__(self, data, transform=None, iterations=250, crop_size=[128,128,128], log=None, net_num_pool_op_kernel_sizes=[], type_='train', multi_anno=True, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		# We use our own Custom dataset wich with we can keep track of sub volumes position.
 		self.data = monai.data.Dataset(data)
@@ -26,6 +26,7 @@ class CustomDataset(Dataset):
 		self.transform = transform
 		self.log=log
 		self.type=type_
+		self.multi_anno = multi_anno
 		# self.croper = CustomRandCropByPosNegLabeld(
 		# 				            keys=["image", "label"],
 		# 				            label_key="label",
@@ -63,6 +64,11 @@ class CustomDataset(Dataset):
 		data_i = {}
 		data_i["image"] = rearrange(np.load(self.data[i]["image"])['arr_0'][None, ...], 'b x y z -> b z x y')
 		data_i["label"] = rearrange(np.load(self.data[i]["label"])['arr_0'][None, ...], 'b x y z -> b z x y')
+		if self.multi_anno:
+			data_i["label2"] = rearrange(np.load(self.data[i]["label2"])['arr_0'][None, ...], 'b x y z -> b z x y')
+			data_i["label3"] = rearrange(np.load(self.data[i]["label3"])['arr_0'][None, ...], 'b x y z -> b z x y')
+
+
 		if "_3_" in self.data[i]["image"].split('/')[-1]:
 			data_i["id"] = [self.data[i]["image"].split('/')[-1].replace('_3_img', '_xxx')]
 		else:
@@ -103,6 +109,9 @@ class CustomDataset(Dataset):
 	            np.vstack(self.net_num_pool_op_kernel_sizes), axis=0))[:-1]
 
 			data_i["label"] = downsample_seg_for_ds_transform3(data_i["label"][None,...].numpy(), deep_supervision_scales, classes=[0,1])
+			if self.multi_anno:
+				data_i["label2"] = downsample_seg_for_ds_transform3(data_i["label2"][None,...].numpy(), deep_supervision_scales, classes=[0,1])
+				data_i["label3"] = downsample_seg_for_ds_transform3(data_i["label3"][None,...].numpy(), deep_supervision_scales, classes=[0,1])
 
 
 

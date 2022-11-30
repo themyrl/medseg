@@ -165,6 +165,48 @@ def create_split_v2(im_pth, seg_pth, val=False, cv='cv1', log=None, data="us",*a
 	return splits
 
 
+def create_split_v3(im_pth, seg_pth, val=False, cv='cv1', log=None, data="us",*args, **kwargs):
+	if data == "us":
+		all_splits = {'cv1':['84R','84L','116R','116L','114R','98R','98L','118R','118L','04L','44R','44L'],
+			  'cv2':['47R', '01R', '01L', '74R', '14R', '14L', '33L', '72L', '51R', '51L'],
+			  'cv3':['05R', '57R', '57L', '43R', '43L', '94R', '131L', '11R', '11L', '54R', '12L', '15R', '17L'],
+			  'cv4':['21R', '21L', '03R', '03L', '97R', '97L', '27R', '27L', '23R', '23L', '53L', '119R'],
+			  'cv5':['125R', '125L', '20R', '42R', '99R', '02R', '02L', '87R','87L','37R','38R','38L']}
+		teuteu = "3_"
+	else:
+		all_splits = {
+		'cv1': ['84', '116', '114', '98', '118', '04', '44', '101', '88'],      
+		'cv2': ['47', '01', '74', '14', '33', '24', '72', '51', '64'],  
+		'cv3': ['05', '57', '43', '94', '131', '11', '54', '12', '15', '17'],      
+		'cv4': ['21', '03', '97', '27', '23', '09', '61', '32', '53', '119'],      
+		'cv5': ['125', '20', '42', '99', '02', '87', '37', '38', '107', '31']}
+		teuteu = "_3_"
+	
+	if val:
+		split=all_splits[cv]
+	else:
+		split=[]
+		for c in list(all_splits.keys()):
+			if c != cv:
+				split += all_splits[c]
+
+
+	splits=[]
+	for spl in split:
+		log.debug("file 	", os.path.join(im_pth,spl+teuteu+'img.npz'))
+		if os.path.exists(os.path.join(im_pth,spl+teuteu+'img.npz')):
+			tmp = {
+					'image': os.path.join(im_pth,spl+teuteu+'img.npz'),
+					'label2' : os.path.join(seg_pth[0],spl+'_Vol.npz'),
+					'label3' : os.path.join(seg_pth[1],spl+'_Vol.npz'),
+					'label': os.path.join(seg_pth[2],spl+'_Vol.npz'),
+					'id': spl
+					}
+			splits.append(tmp)
+
+	return splits
+
+
 
 
 class Log(object):
