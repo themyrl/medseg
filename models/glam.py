@@ -1142,7 +1142,7 @@ class model(SegmentationNetwork):
                  conv_kernel_sizes=None,
                  upscale_logits=False, convolutional_pooling=False, convolutional_upsampling=False,
                  max_num_features=None, basic_block=None,
-                 seg_output_use_bias=False, gt_num=1, imsize=[64,128,128], cfg=None, log=None, *args, **kwargs):
+                 seg_output_use_bias=False, gt_num=1, imsize=[128,128,128], cfg=None, log=None, *args, **kwargs):
     
         super(model, self).__init__()
 
