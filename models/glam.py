@@ -1150,7 +1150,7 @@ class model(SegmentationNetwork):
         embed_dim=cfg.embed_dim
         num_heads=cfg.num_heads
         depths=[2, 2, 2, 2]
-        patch_size=cfg.patch_size
+        patch_size=[i for i in cfg.patch_size]
         window_size=cfg.window_size
         self.log = log
 
