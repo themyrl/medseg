@@ -1,4 +1,5 @@
-name: ct_128_final_jz
+# name: ct_128_final_jz # j'ai oublié de changé ça avant de lancer les expés --'
+name: ct_128_double_jz
 path: 
   pth: /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA
   im: ${dataset.path.pth}/CTimg_128_t
