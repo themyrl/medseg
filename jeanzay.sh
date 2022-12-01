@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=debug     # job name
+#SBATCH --job-name=unetrdbg     # job name
 #SBATCH --ntasks=1                  # number of MP tasks
 #SBATCH --ntasks-per-node=1          # number of MPI tasks per node
 #SBATCH --gres=gpu:1                 # number of GPUs per node
@@ -8,8 +8,8 @@
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
 #SBATCH --time=00:10:00             # maximum execution time (HH:MM:SS)
 #SBATCH --qos=qos_gpu-dev
-#SBATCH --output=logs/debug.out # output file name # add %j to id the job
-#SBATCH --error=logs/debug.err  # error file name # add %j to id the job
+#SBATCH --output=logs/unetrdbg.out # output file name # add %j to id the job
+#SBATCH --error=logs/unetrdbg.err  # error file name # add %j to id the job
 #   SBATCH -C v100-32g
 
 set -x
@@ -39,7 +39,8 @@ module load python/3.8.8
 
 # Training
 # python mainDouble.py -m model=nnunet dataset=us_128_double_jz training=training_128_jz dataset.cv=cv1
-python mainDouble.py -m model=nnunet dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1
+# python mainDouble.py -m model=nnunet dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1
+python mainDouble.py -m model=unetr dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1
 
 
 # Evaluation
