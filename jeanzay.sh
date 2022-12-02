@@ -44,12 +44,12 @@ module load python/3.8.8
 # srun python convert_dataset.py /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USimg /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USimg_full
 # srun python convert_dataset.py /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_mf /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_mf_full
 # srun python convert_dataset.py /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_a2 /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_a2_full
-srun python convert_dataset.py /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_a3 /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_a3_full
+# srun python convert_dataset.py /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_a3 /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_a3_full
 
-srun python convert_dataset.py /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTimg /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTimg_full
-srun python convert_dataset.py /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask_mf /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask_mf_full
-srun python convert_dataset.py /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask_a2 /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask_a2_full
-srun python convert_dataset.py /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask_a3 /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask_a3_full
+# srun python convert_dataset.py /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTimg /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTimg_full
+# srun python convert_dataset.py /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask_mf /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask_mf_full
+# srun python convert_dataset.py /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask_a2 /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask_a2_full
+# srun python convert_dataset.py /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask_a3 /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask_a3_full
 
 
 
@@ -59,6 +59,7 @@ srun python convert_dataset.py /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_
 # python mainDouble.py -m model=nnunet dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1
 # python mainDouble.py -m model=unetr dataset=ct_128_double_jz training=training_128_jz training.loss=Dice dataset.cv=cv1 #unetrdbg
 # python mainDouble.py -m model=glam dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1 #glamdbg
+python mainDouble.py -m model=nnunet dataset=ct_full_double_jz training=training_full_jz dataset.cv=cv1
 
 
 # Evaluation
