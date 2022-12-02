@@ -19,6 +19,7 @@ do_clip: True
 do_schedul: True
 loss: CrossDice # Dice
 
+
 pth: /gpfsscratch/rech/arf/unm89rb/medseg_results
 
 augmentations:
