@@ -17,15 +17,16 @@ def main(argv, arc):
 
 	path = argv[1]
 	out_path = argv[2]
-	mode = argv[4]
-	if mode == "t":
-		mode = "trilinear"
-	if mode == "n":
-		mode = "nearest"
-	if mode == "a":
-		mode = "area"
+	
 	size = None
 	if len(argv)>=4:
+		mode = argv[4]
+		if mode == "t":
+			mode = "trilinear"
+		if mode == "n":
+			mode = "nearest"
+		if mode == "a":
+			mode = "area"
 		size = [int(argv[3])for i in range(3)]
 
 
