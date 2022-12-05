@@ -599,6 +599,8 @@ class Trainer():
         self.model.load_state_dict(checkpoint['state_dict'])
         self.start_epoch = checkpoint['epoch']
         self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+        self.log.debug("loading epoch:", self.start_epoch)
+        exit(0)
 
     def inference(self, inputs, labels):
         log = self.log
