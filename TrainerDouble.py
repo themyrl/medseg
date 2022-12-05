@@ -450,11 +450,11 @@ class Trainer():
                 if l_val > best_metric:
                     best_metric = l_val
                     best_epoch = epoch
-                    self.save_chekpoint(epoch, "best.pt")
+                    self.save_chekpoint(epoch, "best.pt", loss=l_train)
 
             saved_txt = ""
             if (epoch + 1) % self.n_save == 0:
-                self.save_chekpoint(epoch)
+                self.save_chekpoint(epoch, loss=l_train)
                 saved_txt = " :: Saved!"
             log.info("Epoch: {}".format(epoch), "Train Loss: {}, Val Dice: {}, lr: {}{}".format(l_train,
                                                                                                 l_val,
@@ -573,13 +573,14 @@ class Trainer():
             json_string = json.dumps(results)
             outfile.write(json_string)
 
-    def save_chekpoint(self, epoch, txt='latest.pt'):
+    def save_chekpoint(self, epoch, txt='latest.pt', loss=0):
         state_dict = self.model.state_dict()
         optimizer_state_dict = self.optimizer.state_dict()
         save_this = {
             'epoch': epoch + 1,
             'state_dict': state_dict,
-            'optimizer_state_dict': optimizer_state_dict}
+            'optimizer_state_dict': optimizer_state_dict,
+            'loss': loss}
         torch.save(save_this, os.path.join(self.save_path, txt))
 
     def load_checkpoint(self, txt=None):
