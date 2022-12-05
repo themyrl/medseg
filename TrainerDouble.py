@@ -272,7 +272,7 @@ class Trainer():
             os.path.join(self.path, "checkpoint"))
         self.n_save = cfg.training.checkpoint.save
         self.do_load_checkpoint = cfg.training.checkpoint.load
-        self.load_path = os.path.join(self.path, "checkpoint", 'best.pt')
+        self.load_path = os.path.join(self.path, "checkpoint", 'latest.pt')
 
         self.model = import_model(cfg.model.model, dataset='US', num_classes=self.classes,
                                   num_pool=len(
@@ -373,16 +373,7 @@ class Trainer():
                 # exit(0)
                 gc.collect()
 
-                # log.debug('len output', len(output))
-                # log.debug('len labels', len(labels))
-                # for ii in range(len(output)):
-                #   log.debug("output[{}]".format(ii), output[ii].shape)
-                #   log.debug("output[{}]".format(ii), type(output[ii]))
-                #   log.debug("labels[{}]".format(ii), labels[ii].shape)
-                #   log.debug("labels[{}]".format(ii), type(labels[ii]))
-
-        
-                # l = self.loss(output, labels)
+               
                 l = (self.loss(output, labels2) + self.loss(output, labels3))/2
                 l_train += l.detach().cpu().numpy()
 
@@ -600,7 +591,6 @@ class Trainer():
         self.start_epoch = checkpoint['epoch']
         self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
         self.log.debug("loading epoch:", self.start_epoch)
-        exit(0)
 
     def inference(self, inputs, labels):
         log = self.log
