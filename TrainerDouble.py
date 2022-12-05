@@ -524,7 +524,7 @@ class Trainer():
             if '.npz' in f:
                 pred = np.load(os.path.join(self.infer_path, f))['arr_0']
                 anno = np.load(os.path.join(
-                    self.seg_path, f.replace('pred', 'Vol')))['arr_0']
+                    self.seg_path[-1], f.replace('pred', 'Vol')))['arr_0']
 
                 if self._loss != "Dice":
                     pred = convert_seg_image_to_one_hot_encoding_batched(
