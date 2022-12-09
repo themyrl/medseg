@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-fivelog/dataset     # job name
+#SBATCH --job-name=fivelog/dataset     # job name
 #SBATCH --ntasks=1                  # number of MP tasks
 #SBATCH --ntasks-per-node=1          # number of MPI tasks per node
 #SBATCH --gres=gpu:1                 # number of GPUs per node
