@@ -27,27 +27,23 @@ Change also the model path: `model.pth: /scratch/lthemyr/US/model`
 
 ### 2. Training
 
-To train UNet from scratch:
+To train GLAM from scratch with double annotations on CT 128x128x128 fold 1:
 
 ```
-python main.py --config-path=outputs/US_SMALL/NNUNET/CROP_SMALL_nnu_v2\:0/.hydra/ --config-name=config
+python mainDouble.py -m model=glam dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1
+```
 
-```
-To train UNet from scratch:
-
-```
-python main.py -m model=glam dataset=us128 training=crop128_128_128_nnu training.gpu=0
-```
 
 
 ### 3. Inference
 
-Get [here](https://themyr.iiens.net/unet_128.pt) the parameters. And put the .pt file into the model folder like this: `/scratch/lthemyr/US/model/CROP_SMALL_nnu_v2/checkpoint/unet_128.pt`.
+X NOT AVAILABLE X Get [here](https://themyr.iiens.net/unet_128.pt) the parameters. And put the .pt file into the model folder like this: `/scratch/lthemyr/US/model/CROP_SMALL_nnu_v2/checkpoint/unet_128.pt`.
 
 To run evaluation:
 
 ```
-python main.py --config-path=outputs/US_SMALL/NNUNET/CROP_SMALL_nnu_v2\:0/.hydra/ --config-name=config training.checkpoint.load=true training.only_val=true
+python mainDouble.py -m model=glam dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1
+ training.only_val=true
 
 ```
 
