@@ -122,7 +122,7 @@ class Trainer():
         if not 'full' in cfg.training.name:
             val_transforms = Compose(
                 [
-                    # CropForegroundd(keys=["image", "label"], source_key="image"),
+                    CropForegroundd(keys=["image", "label"], source_key="image"),
                     # RandCropByLabelClassesd(keys=["image", "label"],
                     #                         label_key="label",
                     #                         spatial_size=self.crop_size,
