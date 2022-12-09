@@ -122,7 +122,7 @@ class Trainer():
         if not 'full' in cfg.training.name:
             val_transforms = Compose(
                 [
-                    CropForegroundd(keys=["image", "label"], source_key="image"),
+                    CropForegroundd(keys=["image", "label", "label2", "label3"], source_key="image"),
                     # RandCropByLabelClassesd(keys=["image", "label"],
                     #                         label_key="label",
                     #                         spatial_size=self.crop_size,
@@ -131,7 +131,7 @@ class Trainer():
                     #                         ),
                     Resized(keys=["image", "label", "label2", "label3"], spatial_size=self.img_size),
                     
-                    mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True)
+                    # mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True)
                     # RandSpatialCropd(keys=["image", "label"],
                     #               roi_size=self.crop_size,
                     #               random_size=False),
@@ -161,7 +161,7 @@ class Trainer():
                                 prob=1.0),
 
                     Resized(keys=["image", "label", "label2", "label3"], spatial_size=self.img_size, mode="trilinear"),
-                    mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
+                    # mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
                     RandScaleIntensityd(keys="image", factors=0.1, prob=0.5),
                     RandShiftIntensityd(keys="image", offsets=0.1, prob=0.5),
                     mt.RandGaussianNoised(
