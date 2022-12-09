@@ -58,8 +58,8 @@ module load python/3.8.8
 # python mainDouble.py -m model=nnunet dataset=us_128_double_jz training=training_128_jz dataset.cv=cv1
 # python mainDouble.py -m model=nnunet dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1
 # python mainDouble.py -m model=unetr dataset=ct_128_double_jz training=training_128_jz training.loss=Dice dataset.cv=cv1 #unetrdbg
-python mainDouble.py -m model=glam dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1 #glamdbg
-# python mainDouble.py -m model=glam dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1 training.only_val=True #evglmdbg
+# python mainDouble.py -m model=glam dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1 #glamdbg
+python mainDouble.py -m model=glam dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1 training.only_val=True #evglmdbg
 # python mainDouble.py -m model=nnunet dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1 training.only_val=True #evglmdbg
 # python mainDouble.py -m model=unetr dataset=ct_128_double_jz training=training_128_jz training.loss=Dice dataset.cv=cv1 training.only_val=True #evglmdbg
 # python mainDouble.py -m model=nnunet dataset=ct_full_double_jz training=training_full_jz dataset.cv=cv1 #fuctnn
