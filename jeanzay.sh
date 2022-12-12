@@ -1,15 +1,15 @@
 #!/bin/bash
-#SBATCH --job-name=evaldbg     # job name
+#SBATCH --job-name=glam_gdadbg     # job name
 #SBATCH --ntasks=1                  # number of MP tasks
 #SBATCH --ntasks-per-node=1          # number of MPI tasks per node
 #SBATCH --gres=gpu:1                 # number of GPUs per node
 #SBATCH --cpus-per-task=10           # number of cores per tasks
 #SBATCH --hint=nomultithread         # we get physical cores not logical
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
-#SBATCH --time=00:30:00             # maximum execution time (HH:MM:SS)
-#SBATCH --qos=qos_gpu-t3
-#SBATCH --output=logs/evaldbg.out # output file name # add %j to id the job
-#SBATCH --error=logs/evaldbg.err  # error file name # add %j to id the job
+#SBATCH --time=48:00:00             # maximum execution time (HH:MM:SS)
+#SBATCH --qos=qos_gpu-t4
+#SBATCH --output=logs/glam_gdadbg.out # output file name # add %j to id the job
+#SBATCH --error=logs/glam_gdadbg.err  # error file name # add %j to id the job
 #   SBATCH -C v100-32g
 
 set -x
@@ -60,12 +60,19 @@ module load python/3.8.8
 # python mainDouble.py -m model=unetr dataset=ct_128_double_jz training=training_128_jz training.loss=Dice dataset.cv=cv1 #unetrdbg
 # python mainDouble.py -m model=glam dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1 #glamdbg
 # python mainDouble.py -m model=glam dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1 training.only_val=True #evglmdbg
-python mainDouble.py -m model=nnunet dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1 training.only_val=True #evaldbg
+# python mainDouble.py -m model=nnunet dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1 training.only_val=True #evaldbg
 # python mainDouble.py -m model=unetr dataset=ct_128_double_jz training=training_128_jz training.loss=Dice dataset.cv=cv1 training.only_val=True #evglmdbg
 # python mainDouble.py -m model=nnunet dataset=ct_full_double_jz training=training_full_jz dataset.cv=cv1 #fuctnn
 
-###### Now we try without normalized intensity
-# python mainDouble.py -m model=glam dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1 #glamdbgv2
+
+
+
+
+
+
+###### Now we try without normalized intensity nor cropforeground
+python mainDouble.py -m model=glam dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1 #glam_gdadbg
+# python mainDouble.py -m model=unetr dataset=ct_128_double_jz training=training_128_jz training.loss=Dice dataset.cv=cv1 #unetr_gdadbg
 # python mainDouble.py -m model=glam dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1 training.only_val=True #glamdbgv2
 
 
