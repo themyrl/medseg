@@ -183,7 +183,7 @@ class Trainer():
                     
                     # Resized(keys=["image", "label", "label2", "label3"], spatial_size=self.img_size),
                     
-                    mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
+                    # mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
                     RandCropByLabelClassesd(keys=["image", "label", "label2", "label3"],
                                             label_key="label",
                                             spatial_size=self.crop_size,
@@ -201,6 +201,12 @@ class Trainer():
                     # LoadImaged(keys=["image", "label"]),
                     # AddChanneld(keys=["image", "label"]),
                     # CropForegroundd(keys=["image", "label", "label2", "label3"], source_key="image"),
+                    RandCropByLabelClassesd(keys=["image", "label", "label2", "label3"],
+                                            label_key="label",
+                                            spatial_size=self.crop_size,
+                                            num_classes=cfg.dataset.classes + 1,
+                                            num_samples=1
+                                            )
                     RandFlipd(keys=["image", "label", "label2", "label3"], prob=0.25, spatial_axis=0),
                     RandFlipd(keys=["image", "label", "label2", "label3"], prob=0.25, spatial_axis=1),
                     RandFlipd(keys=["image", "label", "label2", "label3"], prob=0.25, spatial_axis=2),
@@ -215,7 +221,7 @@ class Trainer():
 
 
                     # Resized(keys=["image", "label", "label2", "label3"], spatial_size=self.img_size, mode="trilinear"),
-                    mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
+                    # mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
                     RandScaleIntensityd(keys="image", factors=0.1, prob=0.5),
                     RandShiftIntensityd(keys="image", offsets=0.1, prob=0.5),
                     mt.RandGaussianNoised(
@@ -227,12 +233,7 @@ class Trainer():
                     #   roi_size=self.crop_size,
                     #   random_size=False),
 
-                    RandCropByLabelClassesd(keys=["image", "label", "label2", "label3"],
-                                            label_key="label",
-                                            spatial_size=self.crop_size,
-                                            num_classes=cfg.dataset.classes + 1,
-                                            num_samples=1
-                                            )
+                    
                     
                     # ToTensord(keys=["image", "label"]),
                 ]
