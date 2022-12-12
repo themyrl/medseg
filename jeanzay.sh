@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=glamdbgv2     # job name
+#SBATCH --job-name=glamdbgv2eva     # job name
 #SBATCH --ntasks=1                  # number of MP tasks
 #SBATCH --ntasks-per-node=1          # number of MPI tasks per node
 #SBATCH --gres=gpu:1                 # number of GPUs per node
@@ -8,8 +8,8 @@
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
 #SBATCH --time=35:00:00             # maximum execution time (HH:MM:SS)
 #SBATCH --qos=qos_gpu-t4
-#SBATCH --output=logs/glamdbgv2.out # output file name # add %j to id the job
-#SBATCH --error=logs/glamdbgv2.err  # error file name # add %j to id the job
+#SBATCH --output=logs/glamdbgv2eva.out # output file name # add %j to id the job
+#SBATCH --error=logs/glamdbgv2eva.err  # error file name # add %j to id the job
 #   SBATCH -C v100-32g
 
 set -x
@@ -66,6 +66,8 @@ module load python/3.8.8
 
 ###### Now we try without normalized intensity
 python mainDouble.py -m model=glam dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1 #glamdbgv2
+python mainDouble.py -m model=glam dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1 training.only_val=True #glamdbgv2
+
 
 
 

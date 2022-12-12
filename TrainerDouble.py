@@ -241,7 +241,7 @@ class Trainer():
 
         trainData = CustomDataset(self.train_split, transform=train_transforms, iterations=self.iterations,
                                   crop_size=self.crop_size, log=log, net_num_pool_op_kernel_sizes=self.net_num_pool_op_kernel_sizes)
-        testData = CustomDataset(self.val_split, transform=val_transforms,
+        testData = CustomDataset(self.val_split, transform=test_transforms,
                                  iterations=0, crop_size=self.crop_size, log=log, type_='test')
         
 
