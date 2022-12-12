@@ -206,7 +206,7 @@ class Trainer():
                                             spatial_size=self.crop_size,
                                             num_classes=cfg.dataset.classes + 1,
                                             num_samples=1
-                                            )
+                                            ),
                     RandFlipd(keys=["image", "label", "label2", "label3"], prob=0.25, spatial_axis=0),
                     RandFlipd(keys=["image", "label", "label2", "label3"], prob=0.25, spatial_axis=1),
                     RandFlipd(keys=["image", "label", "label2", "label3"], prob=0.25, spatial_axis=2),
