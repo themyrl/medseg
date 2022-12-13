@@ -210,6 +210,28 @@ def create_split_v3(im_pth, seg_pth, val=False, cv='cv1', log=None, data="us",*a
 
 
 
+def create_split_word(im_pth, seg_pth, val=False, suffixe="_npz", log=None, *args, **kwargs):
+
+	if val:
+		im_pth = os.path.join(im_pth, "imagesVal"+suffixe)
+		seg_pth = os.path.join(seg_pth, "labelsVal"+suffixe)
+	else:
+		im_pth = os.path.join(im_pth, "imagesTr"+suffixe)
+		seg_pth = os.path.join(seg_pth, "labelsTr"+suffixe)
+
+
+	fold = os.listdir(im_pth)
+	data=[]
+	for f in fold:
+		tmp = {
+				'image': os.path.join(im_pth,f),
+				'label': os.path.join(seg_pth,f),
+				'id': f
+				}
+		data.append(tmp)
+
+	return data
+
 
 class Log(object):
 	"""docstring for Log"""
