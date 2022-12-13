@@ -10,7 +10,7 @@
 #SBATCH --qos=qos_gpu-t4
 #SBATCH --output=fivelog/nnword.out # output file name # add %j to id the job
 #SBATCH --error=fivelog/nnword.err  # error file name # add %j to id the job
-#   SBATCH -C v100-32g
+#SBATCH -C v100-32g
 
 set -x
 

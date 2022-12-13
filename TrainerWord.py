@@ -382,6 +382,9 @@ class Trainer():
                             inputs = inputs.float().cuda(0)
                             labels = labels.long().cuda(0)
                         output = self.model(inputs, centers)
+                        del inputs
+                        gc.collect()
+
                         if self._loss != "Dice":
                             output = output[0]
                             output = torch.argmax(output, dim=1)
@@ -402,6 +405,9 @@ class Trainer():
                             dice_metric(y_pred=output, y=labels)
                             l = dice_metric.aggregate().item()
                             l_val += l
+
+                        del labels, output
+                        gc.collect()
 
                         len_val += 1
                     if self._loss == "Dice":
