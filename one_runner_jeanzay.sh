@@ -40,10 +40,10 @@ module load python/3.8.8
 # python mainDouble.py -m model=nnunet dataset=us_128_double_jz training=training_128_jz dataset.cv=$1 #m_usnn
 # python mainDouble.py -m model=nnunet dataset=us_128_double_jz training=training_128_jz training.name=training_128_jz_gda dataset.cv=$1 #m_usnn_gda
 # python mainDouble.py -m model=cotr dataset=us_128_double_jz training=training_128_jz dataset.cv=$1 #m_usco
-# python mainDouble.py -m model=cotr dataset=us_128_double_jz training=training_128_jz training.name=training_128_jz_gda dataset.cv=$1 #m_usco_gda
+python mainDouble.py -m model=cotr dataset=us_128_double_jz training=training_128_jz training.name=training_128_jz_gda dataset.cv=$1 #m_usco_gda
 
 # python mainDouble.py -m model=nnunet dataset=ct_128_double_jz training=training_128_jz dataset.cv=$1 #m_ctnn
-python mainDouble.py -m model=nnunet dataset=ct_128_double_jz training=training_128_jz training.name=training_128_jz_gda dataset.cv=$1 #m_ctnn_gda
+# python mainDouble.py -m model=nnunet dataset=ct_128_double_jz training=training_128_jz training.name=training_128_jz_gda dataset.cv=$1 #m_ctnn_gda
 
 # python mainDouble.py -m model=cotr dataset=ct_128_double_jz training=training_128_jz dataset.cv=$1 #m_ctco
 # python mainDouble.py -m model=cotr dataset=ct_128_double_jz training=training_128_jz training.name=training_128_jz_gda dataset.cv=$1 #m_ctco_gda
