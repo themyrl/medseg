@@ -206,9 +206,9 @@ class Trainer():
         )
 
         trainData = CustomDataset(self.train_split, transform=train_transforms, iterations=self.iterations,
-                                  crop_size=self.crop_size, log=log, net_num_pool_op_kernel_sizes=self.net_num_pool_op_kernel_sizes, , multi_anno=False)
+                                  crop_size=self.crop_size, log=log, net_num_pool_op_kernel_sizes=self.net_num_pool_op_kernel_sizes, multi_anno=False)
         testData = CustomDataset(self.val_split, transform=test_transforms,
-                                 iterations=0, crop_size=self.crop_size, log=log, type_='test', , multi_anno=False)
+                                 iterations=0, crop_size=self.crop_size, log=log, type_='test',multi_anno=False)
         
 
         
