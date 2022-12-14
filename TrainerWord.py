@@ -276,7 +276,7 @@ class Trainer():
                         labels[lab] = labels[lab].cuda(0)
 
 
-                with torch.cuda.amp.autocast(dtype=torch.float16):
+                with torch.cuda.amp.autocast():
                     output = self.model(inputs, centers)
                     del inputs
                     if len(self.net_num_pool_op_kernel_sizes) == 0:
