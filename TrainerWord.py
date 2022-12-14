@@ -298,7 +298,7 @@ class Trainer():
 
                 # self.optimizer.step()
                 scaler.step(self.optimizer)
-                scaler.update
+                scaler.update()
 
                 for out in output:
                     del out
