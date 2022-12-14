@@ -163,14 +163,14 @@ class Trainer():
 
             val_transforms = Compose(
                 [
-                    
-                    mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
                     RandCropByLabelClassesd(keys=["image", "label", "label2", "label3"],
                                             label_key="label",
                                             spatial_size=self.crop_size,
                                             num_classes=cfg.dataset.classes + 1,
                                             num_samples=1
-                                            )
+                                            ),
+                    mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
+                    
                 ])
 
             train_transforms = Compose(

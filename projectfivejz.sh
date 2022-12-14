@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=dataset     # job name
+#SBATCH --job-name=nnword     # job name
 #SBATCH --ntasks=1                  # number of MP tasks
 #SBATCH --ntasks-per-node=1          # number of MPI tasks per node
 #SBATCH --gres=gpu:1                 # number of GPUs per node
@@ -8,9 +8,9 @@
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
 #SBATCH --time=04:00:00             # maximum execution time (HH:MM:SS)
 #SBATCH --qos=qos_gpu-t3
-#SBATCH --output=fivelog/dataset.out # output file name # add %j to id the job
-#SBATCH --error=fivelog/dataset.err  # error file name # add %j to id the job
-#SBATCH -C v100-32g
+#SBATCH --output=fivelog/nnword.out # output file name # add %j to id the job
+#SBATCH --error=fivelog/nnword.err  # error file name # add %j to id the job
+# # #     SBATCH -C v100-32g
 
 set -x
 
@@ -30,13 +30,13 @@ module load python/3.8.8
 # srun python convert_dataset.py /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0/labelsVal /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0/labelsVal_npz
 
 
-srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0/imagesTr -o /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0/imagesTr_npz -t float16
-srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0/labelsTr -o /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0/imagesTr_npz -t int16
-srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0/imagesVal -o /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0/imagesVal_npz -t float16
-srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0/labelsVal -o /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0/imagesVal_npz -t int16
+# srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0/imagesTr -o /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0/imagesTr_npz -t float16
+# srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0/labelsTr -o /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0/imagesTr_npz -t int16
+# srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0/imagesVal -o /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0/imagesVal_npz -t float16
+# srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0/labelsVal -o /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0/imagesVal_npz -t int16
 
 # Training
-# python mainWord.py -m model=nnunet dataset=word training=training_word #nnword
+python mainWord.py -m model=nnunet dataset=word training=training_word #nnword
 
 
 

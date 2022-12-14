@@ -110,61 +110,26 @@ class Trainer():
         test_transforms = None
         val_transforms = None
 
-        # train_transforms = Compose([
-        #           RandRotated(keys=["image", "label"],
-        #                       range_x=cfg.training.augmentations.rotate.x_,
-        #                       range_y=cfg.training.augmentations.rotate.y_,
-        #                       range_z=cfg.training.augmentations.rotate.z_,
-        #                       prob=cfg.training.augmentations.rotate.p_),
-        #           # CustomRandScaleCropd(keys=["image", "label"],
-        #           #                    roi_scale=cfg.training.augmentations.scale.min_,
-        #           #                    max_roi_scale=cfg.training.augmentations.scale.max_,
-        #           #                    prob=1,)#cfg.training.augmentations.scale.p_,)
-        #           #                    # random_size=False),
-        #           NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
 
-        #           RandAdjustContrastd(keys=["image", "label"],
-        #                               prob=cfg.training.augmentations.gamma.p_,
-        #                               gamma=cfg.training.augmentations.gamma.g_),
+        test_transforms = Compose(
+                [
+                    mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
+                ])
 
-        #   ])
-
-        # train_transforms = Compose([
-        #           RandFlipd(keys=["image", "label"], prob=0.5, spatial_axis=0),
-        #           RandAffineD(keys=["image", "label"],
-        #               rotate_range=(np.pi/36, np.pi/36, np.pi/36),
-        #               translate_range=(5, 5, 5),
-        #               padding_mode="border",
-        #               scale_range=(0.15, 0.15, 0.15),
-        #               mode=('bilinear', 'nearest'),
-        #               prob=1.0),
-        #           NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
-        #           RandScaleIntensityd(keys="image", factors=0.1, prob=0.5),
-        #           RandShiftIntensityd(keys="image", offsets=0.1, prob=0.5)
-
-        #   ])
-        # val_transforms = Compose(
-        #     [
-        #         # CropForegroundd(keys=["image", "label"], source_key="image"),
-        #         Resized(keys=["image", "label"], spatial_size=self.img_size),
-        #         # RandCropByLabelClassesd(keys=["image", "label"],
-        #         #                         label_key="label",
-        #         #                         spatial_size=self.crop_size,
-        #         #                         num_classes=cfg.dataset.classes + 1,
-        #         #                         num_samples=1
-        #         #                         ),
-        #         mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True)
-        #         # RandSpatialCropd(keys=["image", "label"],
-        #         #               roi_size=self.crop_size,
-        #         #               random_size=False),
-        #     ])
+        val_transforms = Compose(
+                [
+                    RandCropByLabelClassesd(keys=["image", "label", "label2", "label3"],
+                                            label_key="label",
+                                            spatial_size=self.crop_size,
+                                            num_classes=cfg.dataset.classes + 1,
+                                            num_samples=1
+                                            ),
+                    mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
+                    
+                ])
 
         train_transforms = Compose(
             [
-                # load 4 Nifti images and stack them together
-                # LoadImaged(keys=["image", "label"]),
-                # AddChanneld(keys=["image", "label"]),
-                # CropForegroundd(keys=["image", "label"], source_key="image"),
                 RandCropByLabelClassesd(keys=["image", "label"],
                                             label_key="label",
                                             spatial_size=self.crop_size,
@@ -184,7 +149,7 @@ class Trainer():
                 Resized(
                     keys=["image", "label"], spatial_size=self.img_size, mode=("trilinear", "nearest")
                 ),
-                # mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
+                mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
                 RandScaleIntensityd(keys="image", factors=0.1, prob=0.5),
                 RandShiftIntensityd(keys="image", offsets=0.1, prob=0.5),
                 mt.RandGaussianNoised(
@@ -192,16 +157,6 @@ class Trainer():
                 mt.RandGaussianSmoothd(keys="image", sigma_x=(
                     0.5, 1), sigma_y=(0.5, 1), sigma_z=(0.5, 1), prob=0.2),
                 mt.RandAdjustContrastd(keys="image", prob=0.15),
-                # RandSpatialCropd(keys=["image", "label"],
-                #   roi_size=self.crop_size,
-                #   random_size=False),
-                # RandCropByLabelClassesd(keys=["image", "label"],
-                #                         label_key="label",
-                #                         spatial_size=self.crop_size,
-                #                         num_classes=cfg.dataset.classes + 1,
-                #                         num_samples=1
-                #                         )
-                # ToTensord(keys=["image", "label"]),
             ]
         )
 
@@ -289,6 +244,9 @@ class Trainer():
             ts.send(messages=["Training: " + self.dataset_name +
                               '_' + self.training_name + '_' + self.model_name])
 
+
+        scaler = torch.cuda.amp.GradScaler()
+
         best_metric = -1
 
         log.debug('run_training')
@@ -312,44 +270,35 @@ class Trainer():
                 labels = batch_data["label"]
                 centers = batch_data["center"]
 
-                if torch.cuda.is_available() and self.use_gpu:
-                    inputs = inputs.float().cuda(0)
-                    for lab in range(len(labels)):
-                        labels[lab] = labels[lab].cuda(0)
+                # if torch.cuda.is_available() and self.use_gpu:
+                #     inputs = inputs.float().cuda(0)
+                #     for lab in range(len(labels)):
+                #         labels[lab] = labels[lab].cuda(0)
 
 
-                # log.debug("inputs" ,type(inputs))
+                with autocast(device_type='cuda', dtype=torch.float16):
+                    output = self.model(inputs, centers)
+                    del inputs
+                # if len(self.net_num_pool_op_kernel_sizes) == 0:
+                #     labels = labels.cuda(0)
+                    if self._loss == "Dice" and type(output) == tuple:
+                        output = output[0]
+                        labels = labels[0]
+                    gc.collect()
+                    l = self.loss(output, labels)
 
-                output = self.model(inputs, centers)
-
-                del inputs
-                if len(self.net_num_pool_op_kernel_sizes) == 0:
-                    labels = labels.cuda(0)
-                if self._loss == "Dice" and type(output) == tuple:
-                    output = output[0]
-                    labels = labels[0]
-                # exit(0)
-                gc.collect()
-
-                # log.debug('len output', len(output))
-                # log.debug('len labels', len(labels))
-                # for ii in range(len(output)):
-                #   log.debug("output[{}]".format(ii), output[ii].shape)
-                #   log.debug("output[{}]".format(ii), type(output[ii]))
-                #   log.debug("labels[{}]".format(ii), labels[ii].shape)
-                #   log.debug("labels[{}]".format(ii), type(labels[ii]))
-
-        
-                l = self.loss(output, labels)
                 l_train += l.detach().cpu().numpy()
 
                 gc.collect()
-                l.backward()
-                # exit(0)
+                scaler.scale(l).backward()
 
                 if self.do_clip:
+                    scaler.unscale_(self.optimizer)
                     torch.nn.utils.clip_grad_norm_(self.model.parameters(), 12)
-                self.optimizer.step()
+
+                # self.optimizer.step()
+                scaler.step(self.optimizer)
+                scaler.update
 
                 for out in output:
                     del out
