@@ -270,17 +270,17 @@ class Trainer():
                 labels = batch_data["label"]
                 centers = batch_data["center"]
 
-                # if torch.cuda.is_available() and self.use_gpu:
-                #     inputs = inputs.float().cuda(0)
-                #     for lab in range(len(labels)):
-                #         labels[lab] = labels[lab].cuda(0)
+                if torch.cuda.is_available() and self.use_gpu:
+                    inputs = inputs.cuda(0)
+                    for lab in range(len(labels)):
+                        labels[lab] = labels[lab].cuda(0)
 
 
-                with torch.cuda.amp.autocast(device_type='cuda', dtype=torch.float16):
+                with torch.cuda.amp.autocast(dtype=torch.float16):
                     output = self.model(inputs, centers)
                     del inputs
-                # if len(self.net_num_pool_op_kernel_sizes) == 0:
-                #     labels = labels.cuda(0)
+                    if len(self.net_num_pool_op_kernel_sizes) == 0:
+                        labels = labels.cuda(0)
                     if self._loss == "Dice" and type(output) == tuple:
                         output = output[0]
                         labels = labels[0]
