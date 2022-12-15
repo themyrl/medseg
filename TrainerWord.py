@@ -377,7 +377,8 @@ class Trainer():
                                                                                                 saved_txt
                                                                                                 ))
             self.writer.add_scalar('Loss', l_train, epoch)
-            self.writer.add_scalar('Val Dice', l_val, epoch)
+            if self.online_validation and (epoch % self.eval_step == 0):
+                self.writer.add_scalar('Val Dice', l_val, epoch)
             self.writer.add_scalar('lr', self.lr, epoch)
             if self.do_schedul:
                 self.lr = poly_lr(epoch, self.epochs, self.initial_lr, 0.9)
