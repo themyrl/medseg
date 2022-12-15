@@ -118,7 +118,7 @@ class Trainer():
 
         val_transforms = Compose(
                 [
-                    RandCropByLabelClassesd(keys=["image", "label", "label2", "label3"],
+                    RandCropByLabelClassesd(keys=["image", "label"],
                                             label_key="label",
                                             spatial_size=self.crop_size,
                                             num_classes=cfg.dataset.classes + 1,
