@@ -1,4 +1,4 @@
-name: training_full_jz
+name: training_word
 dbg: True
 gpu: 0
 use_gpu: True

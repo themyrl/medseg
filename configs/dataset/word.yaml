@@ -1,4 +1,4 @@
-name: ct_128_final_jz
+name: word
 path: 
   pth: /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0
   im: ${dataset.path.pth}
