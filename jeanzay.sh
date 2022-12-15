@@ -78,7 +78,7 @@ module load python/3.8.8
 # python mainDouble.py -m model=unetr dataset=ct_128_double_jz training=training_128_jz training.loss=Dice dataset.cv=cv1 training.only_val=True #evglmdbg
 # python mainDouble.py -m model=nnunet dataset=ct_full_double_jz training=training_full_jz dataset.cv=cv1 #fuctnn
 
-python mainDoubleV2.py -m model=nnunet dataset=us_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #v2usnn
+python mainDoubleV2.py -m model=nnunet dataset=us_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=cv1 #v2usnn
 
 
 
