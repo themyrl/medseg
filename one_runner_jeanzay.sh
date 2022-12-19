@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=v2ctco     # job name
+#SBATCH --job-name=cv2usnn     # job name
 #SBATCH --ntasks=1                  # number of MP tasks
 #SBATCH --ntasks-per-node=1          # number of MPI tasks per node
 #SBATCH --gres=gpu:1                 # number of GPUs per node
@@ -8,8 +8,8 @@
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
 #SBATCH --time=35:00:00             # maximum execution time (HH:MM:SS)
 #SBATCH --qos=qos_gpu-t4
-#SBATCH --output=logs/v2ctco%j.out # output file name # add %j to id the job
-#SBATCH --error=logs/v2ctco%j.err  # error file name # add %j to id the job
+#SBATCH --output=logs/cv2usnn%j.out # output file name # add %j to id the job
+#SBATCH --error=logs/cv2usnn%j.err  # error file name # add %j to id the job
 # # #   SBATCH -C v100-32g
 
 set -x
@@ -51,10 +51,11 @@ module load python/3.8.8
 
 ## multi anno v2
 # python mainDoubleV2.py -m model=nnunet dataset=us_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #v2usnn
+python mainDoubleV2.py -m model=nnunet dataset=us_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=$1 training.checkpoint.load=True #cv2usnn
 # python mainDoubleV2.py -m model=nnunet dataset=ct_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #v2ctnn
 
 # python mainDoubleV2.py -m model=cotr dataset=us_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #v2usco
-python mainDoubleV2.py -m model=cotr dataset=ct_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #v2ctco
+# python mainDoubleV2.py -m model=cotr dataset=ct_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #v2ctco
 
 
 
