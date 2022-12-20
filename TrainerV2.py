@@ -101,14 +101,14 @@ class Trainer():
         self.seg_path = [cfg.dataset.path.seg2, cfg.dataset.path.seg3, cfg.dataset.path.seg23]
         if "ct" in cfg.dataset.name:
             self.train_split = create_split_v3(
-                cfg.dataset.path.im, cfg.dataset.path.seg, cv=cfg.dataset.cv, log=log, data="ct")
+                cfg.dataset.path.im, self.seg_path, cv=cfg.dataset.cv, log=log, data="ct")
             self.val_split = create_split_v3(
-                cfg.dataset.path.im, cfg.dataset.path.seg, cv=cfg.dataset.cv, val=True, log=log, data="ct")
+                cfg.dataset.path.im, self.seg_path, cv=cfg.dataset.cv, val=True, log=log, data="ct")
         else:
             self.train_split = create_split_v3(
-                cfg.dataset.path.im, cfg.dataset.path.seg, cv=cfg.dataset.cv, log=log)
+                cfg.dataset.path.im, self.seg_path, cv=cfg.dataset.cv, log=log)
             self.val_split = create_split_v3(
-                cfg.dataset.path.im, cfg.dataset.path.seg, cv=cfg.dataset.cv, val=True, log=log)
+                cfg.dataset.path.im, self.seg_path, cv=cfg.dataset.cv, val=True, log=log)
 
 
 
@@ -325,14 +325,6 @@ class Trainer():
                 # exit(0)
                 gc.collect()
 
-                # log.debug('len output', len(output))
-                # log.debug('len labels', len(labels))
-                # for ii in range(len(output)):
-                #   log.debug("output[{}]".format(ii), output[ii].shape)
-                #   log.debug("output[{}]".format(ii), type(output[ii]))
-                #   log.debug("labels[{}]".format(ii), labels[ii].shape)
-                #   log.debug("labels[{}]".format(ii), type(labels[ii]))
-
         
                 l = self.loss(output, labels)
                 l_train += l.detach().cpu().numpy()
@@ -405,6 +397,8 @@ class Trainer():
                     best_metric = l_val
                     best_epoch = epoch
                     self.save_chekpoint(epoch, "best.pt")
+                    
+                self.writer.add_scalar('Val Dice', l_val, epoch)
 
             saved_txt = ""
             if (epoch + 1) % self.n_save == 0:
@@ -416,7 +410,7 @@ class Trainer():
                                                                                                 saved_txt
                                                                                                 ))
             self.writer.add_scalar('Loss', l_train, epoch)
-            self.writer.add_scalar('Val Dice', l_val, epoch)
+            
             self.writer.add_scalar('lr', self.lr, epoch)
             if self.do_schedul:
                 self.lr = poly_lr(epoch, self.epochs, self.initial_lr, 0.9)
