@@ -139,7 +139,7 @@ class Trainer():
                                 translate_range=(50, 50, 50),
                                 padding_mode="border",
                                 scale_range=(0.25, 0.25, 0.25),
-                                mode=('bilinear', 'nearest', 'nearest', 'nearest'),
+                                mode=('bilinear', 'nearest'),
                                 prob=1.0),
 
                     Resized(keys=["image", "label"], spatial_size=self.img_size, mode="trilinear"),
@@ -189,7 +189,7 @@ class Trainer():
                                 translate_range=(50, 50, 50),
                                 padding_mode="border",
                                 scale_range=(0.25, 0.25, 0.25),
-                                mode=('bilinear', 'nearest', 'nearest', 'nearest'),
+                                mode=('bilinear', 'nearest'),
                                 prob=1.0),
                     RandScaleIntensityd(keys="image", factors=0.1, prob=0.5),
                     RandShiftIntensityd(keys="image", offsets=0.1, prob=0.5),
