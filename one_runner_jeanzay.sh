@@ -6,7 +6,7 @@
 #SBATCH --cpus-per-task=10           # number of cores per tasks
 #SBATCH --hint=nomultithread         # we get physical cores not logical
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
-#SBATCH --time=35:00:00             # maximum execution time (HH:MM:SS)
+#SBATCH --time=48:00:00             # maximum execution time (HH:MM:SS)
 #SBATCH --qos=qos_gpu-t4
 #SBATCH --output=logs/sv2ctnn%j.out # output file name # add %j to id the job
 #SBATCH --error=logs/sv2ctnn%j.err  # error file name # add %j to id the job
@@ -65,7 +65,7 @@ module load python/3.8.8
 ## simple anno v2
 python mainV2.py -m model=nnunet dataset=ct_128_simple_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #sv2ctnn
 # python mainV2.py -m model=nnunet dataset=us_128_simple_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #sv2usnn
-`
+
 # python mainV2.py -m model=cotr dataset=ct_128_simple_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #sv2ctco
 # python mainV2.py -m model=cotr dataset=us_128_simple_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #sv2usco
 
