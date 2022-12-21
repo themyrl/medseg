@@ -82,7 +82,7 @@ module load python/3.8.8
 # python mainDoubleV2.py -m model=glam dataset=ct_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=cv1 #v2ctgl
 
 # python mainV2.py -m model=nnunet dataset=ct_128_simple_jz_v2 training=training_128_jz_v2 dataset.cv=cv1 #sv2ctnn
-python mainDoubleV2.py -m model=glam dataset=us_128_double_jz_v2 training=training_128_jz_v2 training.name=tr128v2clamp dataset.cv=cv1 #v2usglv2
+python mainDoubleV2.py -m model=glam dataset=us_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=cv1 #v2usglv2
 
 
 
