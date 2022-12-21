@@ -371,24 +371,7 @@ class SwinTransformerBlock(nn.Module):
         attn_windows, gt = self.attn(x_windows, mask=attn_mask, gt=gt)  
 
         
-        # self.nc = vts.shape[0]//B
-        # if len(vts.shape) != 3:
-        #     self.nc = vts.shape[0]
-        #     vts = repeat(vts, "g c -> b g c", b=B)# shape of (num_windows*B, G, C)
 
-        # vt_pos_ = [i*vts.shape[1] + vt_pos[i] for i in range(B)]
-        # vt_pos_ = vt_pos.copy()
-        # print("len(vt_pos_)" ,len(vt_pos_))
-        # print("self.n_vts", self.n_vts)
-        # print("self.nc", self.nc)
-
-        # if B==2:
-        #     vt_pos_[self.n_vts:] = [self.nc+vt_pos_[self.n_vts + i] for i in range(self.n_vts)]
-
-        # vts = rearrange(vts, "b n c -> (b n) c")
-        # vt = vts[vt_pos_]
-        # vt = rearrange(vt, "(b n) c -> b n c", b=B)
-        # vts = rearrange(vts, "(b n) c -> b n c", b=B)
 
 
 
@@ -405,39 +388,8 @@ class SwinTransformerBlock(nn.Module):
 
         # gt = torch.cat([vt, gt], dim=1)
         gt = self.gt_attn(gt, pe)
-        # if self.vt_num != 1:
-        #     vt = gt[:,:self.n_vts*self.vt_num,:]
-        #     gt = gt[:,self.n_vts*self.vt_num:,:]
-        # else:
-        #     vt = gt[:,:self.n_vts,:]
-        #     gt = gt[:,self.n_vts:,:]
         gt = rearrange(gt, "b (n g) c -> (b n) g c",g=ngt, c=C)
 
-        # New vts
-        # vts_ = vts.clone().half()
-        # if len(vts_.shape) != 3:
-        #     vts_ = repeat(vts_, "g c -> b g c", b=B)# shape of (num_windows*B, G, C)
-        # for i in range(B):
-        #     vts_[i, vt_pos[i]] = vt[i]
-
-        # Modif the vts
-        # z = torch.zeros(vts.shape, dtype=vt.dtype, device=vts.device)
-        # if self.vt_num != 1:
-        #     vt = rearrange(vt, "b (n v) c -> b n (v c)", v=self.vt_num)
-        # vt = rearrange(vt, "b n c -> (b n) c")
-        # z[vt_pos_] = vt
-        # vts = vts + z
-        # vts = rearrange(vts, "(b n) c -> b n c", b=B)        
-
-        # check_pos = check.nonzero(as_tuple=True)[0]
-        # vt_mask = torch.zeros((vts.shape[1]*self.vt_num, vts.shape[1]*self.vt_num), dtype=vts.dtype, device=vts.device)-1000
-        # vt_mask[:, check_pos] = 0
-        # vt_mask = repeat(vt_mask, "n c -> b n c", b=B)
-        # if self.vt_num != 1:
-        #     vts = rearrange(vts, "b n (v c) -> b (n v) c", v=self.vt_num)
-        # vts = self.vt_attn(vts, None,vt_mask)
-        # if self.vt_num != 1:
-        #     vts = rearrange(vts, "b (n v) c -> b n (v c)", v=self.vt_num)
 
 
         # merge windows
@@ -458,6 +410,8 @@ class SwinTransformerBlock(nn.Module):
         # FFN
         x = shortcut + self.drop_path(x)
         x = x + self.drop_path(self.mlp(self.norm2(x)))
+
+        gt = torch.clamp(gt, min=-1, max=1)
 
         return x, gt
 

@@ -1,15 +1,15 @@
 #!/bin/bash
-#SBATCH --job-name=sv2ctnn     # job name
+#SBATCH --job-name=v2usglv2     # job name
 #SBATCH --ntasks=1                  # number of MP tasks
 #SBATCH --ntasks-per-node=1          # number of MPI tasks per node
 #SBATCH --gres=gpu:1                 # number of GPUs per node
 #SBATCH --cpus-per-task=10           # number of cores per tasks
 #SBATCH --hint=nomultithread         # we get physical cores not logical
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
-#SBATCH --time=00:20:00             # maximum execution time (HH:MM:SS)
-#SBATCH --qos=qos_gpu-dev
-#SBATCH --output=logs/sv2ctnn.out # output file name # add %j to id the job
-#SBATCH --error=logs/sv2ctnn.err  # error file name # add %j to id the job
+#SBATCH --time=48:00:00             # maximum execution time (HH:MM:SS)
+#SBATCH --qos=qos_gpu-t4
+#SBATCH --output=logs/v2usglv2.out # output file name # add %j to id the job
+#SBATCH --error=logs/v2usglv2.err  # error file name # add %j to id the job
 #   SBATCH -C v100-32g
 
 set -x
@@ -81,7 +81,8 @@ module load python/3.8.8
 # python mainDoubleV2.py -m model=nnunet dataset=us_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=cv1 #v2usnn
 # python mainDoubleV2.py -m model=glam dataset=ct_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=cv1 #v2ctgl
 
-python mainV2.py -m model=nnunet dataset=ct_128_simple_jz_v2 training=training_128_jz_v2 dataset.cv=cv1 #sv2ctnn
+# python mainV2.py -m model=nnunet dataset=ct_128_simple_jz_v2 training=training_128_jz_v2 dataset.cv=cv1 #sv2ctnn
+python mainDoubleV2.py -m model=glam model.name=GLAMv2 dataset=us_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=cv1 #v2usglv2
 
 
 
