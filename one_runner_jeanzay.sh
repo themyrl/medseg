@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=evsv2usnn     # job name
+#SBATCH --job-name=evsv2ctnn     # job name
 #SBATCH --ntasks=1                  # number of MP tasks
 #SBATCH --ntasks-per-node=1          # number of MPI tasks per node
 #SBATCH --gres=gpu:1                 # number of GPUs per node
@@ -8,8 +8,8 @@
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
 #SBATCH --time=02:00:00             # maximum execution time (HH:MM:SS)
 #SBATCH --qos=qos_gpu-t3
-#SBATCH --output=multilogs/evsv2usnn%j.out # output file name # add %j to id the job
-#SBATCH --error=multilogs/evsv2usnn%j.err  # error file name # add %j to id the job
+#SBATCH --output=multilogs/evsv2ctnn%j.out # output file name # add %j to id the job
+#SBATCH --error=multilogs/evsv2ctnn%j.err  # error file name # add %j to id the job
 # # #   SBATCH -C v100-32g
 
 set -x
@@ -89,7 +89,8 @@ module load python/3.8.8
 # python mainDouble.py -m model=cotr dataset=ct_128_double_jz training=training_128_jz dataset.cv=$1 training.only_val=True #m_ctco
 
 # python mainV2.py -m model=cotr dataset=ct_128_simple_jz_v2 training=training_128_jz_v2 dataset.cv=$1 training.checkpoint.load=True training.only_val=True #evsv2ctco
-python mainV2.py -m model=nnunet dataset=us_128_simple_jz_v2 training=training_128_jz_v2 dataset.cv=$1 training.checkpoint.load=True training.only_val=True #evsv2usnn
+# python mainV2.py -m model=nnunet dataset=us_128_simple_jz_v2 training=training_128_jz_v2 dataset.cv=$1 training.checkpoint.load=True training.only_val=True #evsv2usnn
+python mainV2.py -m model=nnunet dataset=ct_128_simple_jz_v2 training=training_128_jz_v2 dataset.cv=$1 training.checkpoint.load=True training.only_val=True #evsv2ctnn
 
 
 
