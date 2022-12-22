@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=v2ctglv2     # job name
+#SBATCH --job-name=evsv2usco     # job name
 #SBATCH --ntasks=1                  # number of MP tasks
 #SBATCH --ntasks-per-node=1          # number of MPI tasks per node
 #SBATCH --gres=gpu:1                 # number of GPUs per node
@@ -8,8 +8,8 @@
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
 #SBATCH --time=48:00:00             # maximum execution time (HH:MM:SS)
 #SBATCH --qos=qos_gpu-t4
-#SBATCH --output=logs/v2ctglv2%j.out # output file name # add %j to id the job
-#SBATCH --error=logs/v2ctglv2%j.err  # error file name # add %j to id the job
+#SBATCH --output=logs/evsv2usco%j.out # output file name # add %j to id the job
+#SBATCH --error=logs/evsv2usco%j.err  # error file name # add %j to id the job
 # # #   SBATCH -C v100-32g
 
 set -x
@@ -63,7 +63,7 @@ module load python/3.8.8
 # python mainDoubleV2.py -m model=glam dataset=us_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #v2usgl
 
 
-python mainDoubleV2.py -m model=glam model.name=GLAMv2 dataset=ct_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #v2ctglv2
+# python mainDoubleV2.py -m model=glam model.name=GLAMv2 dataset=ct_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #v2ctglv2
 # python mainDoubleV2.py -m model=glam model.name=GLAMv2 dataset=us_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #v2usglv2
 
 
@@ -88,7 +88,7 @@ python mainDoubleV2.py -m model=glam model.name=GLAMv2 dataset=ct_128_double_jz_
 # python mainDouble.py -m model=nnunet dataset=ct_128_double_jz training=training_128_jz dataset.cv=$1 training.only_val=True #m_ctnn
 # python mainDouble.py -m model=cotr dataset=ct_128_double_jz training=training_128_jz dataset.cv=$1 training.only_val=True #m_ctco
 
-# python mainV2.py -m model=cotr dataset=ct_128_simple_jz_v2 training=training_128_jz_v2 dataset.cv=$1 training.checkpoint.load=True training.only_val=True #evsv2usco
+python mainV2.py -m model=cotr dataset=ct_128_simple_jz_v2 training=training_128_jz_v2 dataset.cv=$1 training.checkpoint.load=True training.only_val=True #evsv2usco
 
 
 
