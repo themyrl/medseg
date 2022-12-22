@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-JOBID=$(sbatch --parsable  one_runner_jeanzay.sh cv1)
+# JOBID=$(sbatch --parsable  one_runner_jeanzay.sh cv1)
 
 for i in $(seq 2 5);
 do
