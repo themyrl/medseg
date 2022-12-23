@@ -232,7 +232,7 @@ class Trainer():
             os.path.join(self.path, "checkpoint"))
         self.n_save = cfg.training.checkpoint.save
         self.do_load_checkpoint = cfg.training.checkpoint.load
-        self.load_path = os.path.join(self.path, "checkpoint", 'best.pt')
+        self.load_path = os.path.join(self.path, "checkpoint", 'latest.pt')
 
         self.model = import_model(cfg.model.model, dataset='US', num_classes=self.classes,
                                   num_pool=len(
@@ -422,7 +422,7 @@ class Trainer():
 
     def run_eval(self, do_infer=True, *args, **kwargs):
         log = self.log
-        self.load_checkpoint(os.path.join(self.path, "checkpoint", 'best.pt'))
+        self.load_checkpoint(os.path.join(self.path, "checkpoint", 'latest.pt'))
         post_trans = Compose(
             [Activations(sigmoid=True), AsDiscrete(threshold=True)]
         )
