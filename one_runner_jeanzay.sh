@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=v2usglv2     # job name
+#SBATCH --job-name=cttrv2     # job name
 #SBATCH --ntasks=1                  # number of MP tasks
 #SBATCH --ntasks-per-node=1          # number of MPI tasks per node
 #SBATCH --gres=gpu:1                 # number of GPUs per node
@@ -8,8 +8,8 @@
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
 #SBATCH --time=48:00:00             # maximum execution time (HH:MM:SS)
 #SBATCH --qos=qos_gpu-t4
-#SBATCH --output=multilogs/v2usglv2%j.out # output file name # add %j to id the job
-#SBATCH --error=multilogs/v2usglv2%j.err  # error file name # add %j to id the job
+#SBATCH --output=multilogs/cttrv2%j.out # output file name # add %j to id the job
+#SBATCH --error=multilogs/cttrv2%j.err  # error file name # add %j to id the job
 # # #   SBATCH -C v100-32g
 
 set -x
