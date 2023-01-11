@@ -10,7 +10,7 @@
 #SBATCH --qos=qos_gpu-t3
 #SBATCH --output=multilogs/evaluation.out # output file name # add %j to id the job
 #SBATCH --error=multilogs/evaluation.err  # error file name # add %j to id the job
-#   SBATCH -C v100-32g
+#SBATCH -C v100-32g
 
 set -x
 
