@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=cttrv2     # job name
+#SBATCH --job-name=r3v2usglv2     # job name
 #SBATCH --ntasks=1                  # number of MP tasks
 #SBATCH --ntasks-per-node=1          # number of MPI tasks per node
 #SBATCH --gres=gpu:1                 # number of GPUs per node
@@ -8,8 +8,8 @@
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
 #SBATCH --time=48:00:00             # maximum execution time (HH:MM:SS)
 #SBATCH --qos=qos_gpu-t4
-#SBATCH --output=multilogs/cttrv2%j.out # output file name # add %j to id the job
-#SBATCH --error=multilogs/cttrv2%j.err  # error file name # add %j to id the job
+#SBATCH --output=multilogs/r3v2usglv2%j.out # output file name # add %j to id the job
+#SBATCH --error=multilogs/r3v2usglv2%j.err  # error file name # add %j to id the job
 # # #   SBATCH -C v100-32g
 
 set -x
@@ -64,7 +64,9 @@ module load python/3.8.8
 
 
 # python mainDoubleV2.py -m model=glam model.name=GLAMv2 dataset=ct_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #v2ctglv2
-# python mainDoubleV2.py -m model=glam model.name=GLAMv2 dataset=us_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #v2usglv2
+python mainDoubleV2.py -m model=glam model.name=GLAMv2 dataset=us_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #r3v2usglv2
+
+# python mainV2.py -m model=unetr dataset=ct_128_simple_jz_v2 training=training_128_jz_v2 training.loss=Dice dataset.cv=$1 #cttrv2
 
 
 ## simple anno v2
@@ -77,7 +79,7 @@ module load python/3.8.8
 # python mainV2.py -m model=glam model.name=GLAMv2 dataset=ct_128_simple_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #sv2ctglv2
 # python mainV2.py -m model=glam model.name=GLAMv2 dataset=us_128_simple_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #sv2usglv2
 
-python mainV2.py -m model=unetr dataset=ct_128_simple_jz_v2 training=training_128_jz_v2 training.loss=Dice dataset.cv=$1 #cttrv2
+# python mainV2.py -m model=unetr dataset=ct_128_simple_jz_v2 training=training_128_jz_v2 training.loss=Dice dataset.cv=$1 #cttrv2
 
 
 
