@@ -70,8 +70,13 @@ def main(pred_pth, gt_pth, out_pth):
 			print("d", gt.shape, pred.shape)
 
 
-			pred = torch.from_numpy(pred).float().cuda(0)
-			gt   = torch.from_numpy(gt).float().cuda(0)
+			pred = pred.astype(np.int16)
+			gt = gt.astype(np.int16)
+
+			pred = torch.from_numpy(pred).cuda(0)
+			gt   = torch.from_numpy(gt).cuda(0)
+
+			gc.collect()
 
 			dsc = compute_meandice(pred, gt, ignore_empty=False)
 			hd95 = compute_hausdorff_distance(pred, gt, percentile=95)
