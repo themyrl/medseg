@@ -35,7 +35,7 @@ def main(pred_pth, gt_pth, out_pth):
 	classes = 2
 	if out_pth == "":
 		out_pth = pred_pth
-	out_pth = os.path.join(out_pth, "cc_pp_final_results.json") 
+	out_pth = os.path.join(out_pth, "final_results.json") 
 
 	results = {}
 	avg_dsc = [0, 0]
@@ -56,7 +56,8 @@ def main(pred_pth, gt_pth, out_pth):
 
 			size = gt.shape
 			pred = torch.from_numpy(pred)
-			pred = T.Resize(size, mode="nearest")(pred[None, ...])#[0,...]
+			pred = T.Resize(size, mode="trilinear", align_corners=True)(pred[None, ...])#[0,...]
+			pred = T.AsDiscrete(threshold=0.5)(pred)
 			print("b", gt.shape, pred.shape)
 
 			pred = pred[0,...].numpy()
@@ -117,15 +118,19 @@ if __name__ == '__main__':
 	else:
 			
 		# pred_pth = "/scratch/lthemyr/20220318_US_DATA/US_256/CROP_SMALL_64_nnu"
-		pred_pth = ["/gpfsscratch/rech/arf/unm89rb/medseg_results/us_128_final_jz/training_128_jz", 
-					"/gpfsscratch/rech/arf/unm89rb/medseg_results/ct_128_final_jz/training_128_jz"]
-		gts = ["/gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask", 
-			   "/gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask"]
+		pred_pth = ["/gpfsscratch/rech/arf/unm89rb/medseg_results/us_128_simple_jz_v2/training_128_jz_v2", 
+					"/gpfsscratch/rech/arf/unm89rb/medseg_results/ct_128_simple_jz_v2/training_128_jz_v2",
+					"/gpfsscratch/rech/arf/unm89rb/medseg_results/us_128_double_jz_v2/training_128_jz_v2", 
+					"/gpfsscratch/rech/arf/unm89rb/medseg_results/ct_128_double_jz_v2/training_128_jz_v2"]
+		gts = ["/gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_mf", 
+			   "/gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask_mf",
+			   "/gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_mf", 
+			   "/gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask_mf"]
 		model = {
 				"NNUNET":["cv1", "cv2", "cv3", "cv4", "cv5"],
 				"COTR"  :["cv1", "cv2", "cv3", "cv4", "cv5"]
 				}
-		for p in range(2):
+		for p in range(4):
 			for k in list(model.keys()):
 				for i in model[k]:
 					# main(os.path.join(pred_pth[p], k, i), args.gt_pth, "")
