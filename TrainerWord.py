@@ -550,7 +550,8 @@ class Trainer():
                             crop = crop.float().cuda(0)
 
                         with torch.no_grad():
-                            out_crop = self.model(crop, centers)
+                            with torch.cuda.amp.autocast():
+                                out_crop = self.model(crop, centers)
                         output[:, :, idx_d:idx_d + D_crop, idx_h:idx_h +
                                H_crop, idx_w:idx_w + W_crop] = out_crop[0].cpu()
                         del out_crop
