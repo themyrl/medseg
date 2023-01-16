@@ -161,16 +161,19 @@ class Trainer():
         )
 
         trainData = CustomDataset(self.train_split, transform=train_transforms, iterations=self.iterations,
-                                  crop_size=self.crop_size, log=log, net_num_pool_op_kernel_sizes=self.net_num_pool_op_kernel_sizes, multi_anno=False)
+                                  crop_size=self.crop_size, log=log, net_num_pool_op_kernel_sizes=self.net_num_pool_op_kernel_sizes, 
+                                  multi_anno=False, num_classes=cfg.dataset.classes)
         testData = CustomDataset(self.val_split, transform=test_transforms,
-                                 iterations=0, crop_size=self.crop_size, log=log, type_='test',multi_anno=False)
+                                 iterations=0, crop_size=self.crop_size, log=log, type_='test',
+                                 multi_anno=False, num_classes=cfg.dataset.classes)
         
 
         
 
         if self.online_validation:
             valData = CustomDataset(self.val_split, transform=val_transforms,
-                                    iterations=0, crop_size=self.crop_size, log=log, type_='val',multi_anno=False)
+                                    iterations=0, crop_size=self.crop_size, log=log, type_='val',
+                                    multi_anno=False, num_classes=cfg.dataset.classes)
 
         self.train_loader = DataLoader(trainData, batch_size=self.batch_size, shuffle=True,
                                        num_workers=self.num_workers, pin_memory=torch.cuda.is_available())

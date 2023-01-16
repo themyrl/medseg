@@ -16,7 +16,8 @@ import torch
 # import time
 
 class CustomDataset(Dataset):
-	def __init__(self, data, transform=None, iterations=250, crop_size=[128,128,128], log=None, net_num_pool_op_kernel_sizes=[], type_='train', multi_anno=True, *args, **kwargs):
+	def __init__(self, data, transform=None, iterations=250, crop_size=[128,128,128], log=None, net_num_pool_op_kernel_sizes=[], type_='train', 
+		multi_anno=True, num_classes=2, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		# We use our own Custom dataset wich with we can keep track of sub volumes position.
 		self.data = monai.data.Dataset(data)
@@ -27,6 +28,7 @@ class CustomDataset(Dataset):
 		self.log=log
 		self.type=type_
 		self.multi_anno = multi_anno
+		self.num_classes = num_classes
 		# self.croper = CustomRandCropByPosNegLabeld(
 		# 				            keys=["image", "label"],
 		# 				            label_key="label",
@@ -111,10 +113,10 @@ class CustomDataset(Dataset):
 			deep_supervision_scales = [[1, 1, 1]] + list(list(i) for i in 1 / np.cumprod(
 	            np.vstack(self.net_num_pool_op_kernel_sizes), axis=0))[:-1]
 
-			data_i["label"] = downsample_seg_for_ds_transform3(data_i["label"][None,...].numpy(), deep_supervision_scales, classes=[0,1])
+			data_i["label"] = downsample_seg_for_ds_transform3(data_i["label"][None,...].numpy(), deep_supervision_scales, classes=[i for i in range(self.num_classes)])
 			if self.multi_anno:
-				data_i["label2"] = downsample_seg_for_ds_transform3(data_i["label2"][None,...].numpy(), deep_supervision_scales, classes=[0,1])
-				data_i["label3"] = downsample_seg_for_ds_transform3(data_i["label3"][None,...].numpy(), deep_supervision_scales, classes=[0,1])
+				data_i["label2"] = downsample_seg_for_ds_transform3(data_i["label2"][None,...].numpy(), deep_supervision_scales, classes=[i for i in range(self.num_classes)])
+				data_i["label3"] = downsample_seg_for_ds_transform3(data_i["label3"][None,...].numpy(), deep_supervision_scales, classes=[i for i in range(self.num_classes)])
 
 
 
