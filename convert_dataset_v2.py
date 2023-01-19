@@ -16,7 +16,8 @@ def main(args):
 
 	path = args.in_path
 	out_path = args.out_path
-	size = size = [int(args.size)for i in range(3)]
+	if size != None:
+		size = [int(args.size) for i in range(3)]
 	mode = args.mode
 	_type = all_types[args.type]
 
