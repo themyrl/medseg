@@ -44,7 +44,7 @@ import json
 import numpy as np
 from torch.utils.tensorboard import SummaryWriter
 
-import telegram_send as ts
+#import telegram_send as ts
 
 from einops import rearrange
 
@@ -121,7 +121,7 @@ class Trainer():
                     RandCropByLabelClassesd(keys=["image", "label"],
                                             label_key="label",
                                             spatial_size=self.crop_size,
-                                            num_classes=cfg.dataset.classes + 1,
+                                            num_classes=cfg.dataset.classes,
                                             num_samples=1
                                             ),
                     mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
@@ -133,7 +133,7 @@ class Trainer():
                 RandCropByLabelClassesd(keys=["image", "label"],
                                             label_key="label",
                                             spatial_size=self.crop_size,
-                                            num_classes=cfg.dataset.classes + 1,
+                                            num_classes=cfg.dataset.classes,
                                             num_samples=1
                                             ),
                 RandFlipd(keys=["image", "label"], prob=0.25, spatial_axis=0),
@@ -186,8 +186,8 @@ class Trainer():
 
         self.stride = cfg.training.inference.stride
         self.classes = cfg.dataset.classes
-        if self._loss == "CrossDice":
-            self.classes += 1
+        # if self._loss == "CrossDice":
+        #     self.classes += 1
 
         # Models
         log.debug("Model")
@@ -555,6 +555,8 @@ class Trainer():
                         with torch.no_grad():
                             with torch.cuda.amp.autocast():
                                 out_crop = self.model(crop, centers)
+                                for dbg_ in range(self.classes):
+                                    log.debug("C {} stats".format(dbg_), out_crop[0][0,dbg_,...].min(), out_crop[0][0,dbg_,...].mean(), out_crop[0][0,dbg_,...].max(), out_crop[0][0,dbg_,...].sum())
                         output[:, :, idx_d:idx_d + D_crop, idx_h:idx_h +
                                H_crop, idx_w:idx_w + W_crop] = out_crop[0].cpu()
                         del out_crop
