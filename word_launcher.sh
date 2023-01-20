@@ -6,8 +6,8 @@
 #SBATCH --cpus-per-task=10           # number of cores per tasks
 #SBATCH --hint=nomultithread         # we get physical cores not logical
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
-#SBATCH --time=99:00:00             # maximum execution time (HH:MM:SS)
-#SBATCH --qos=qos_gpu-t4
+#SBATCH --time=00:20:00             # maximum execution time (HH:MM:SS)
+#SBATCH --qos=qos_gpu-dev
 #SBATCH --output=fivelog/nnworddbg.out # output file name # add %j to id the job
 #SBATCH --error=fivelog/nnworddbg.err  # error file name # add %j to id the job
 # # #     SBATCH -C v100-32g
