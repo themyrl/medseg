@@ -72,7 +72,7 @@ def downsample_seg_for_ds_transform3(seg, ds_scales=((1, 1, 1), (0.5, 0.5, 0.5),
 
 	for s in ds_scales:
 		if all([i == 1 for i in s]):
-			output.append(torch.from_numpy(one_hot))
+			output.append(one_hot)
 		else:
 			kernel_size = tuple(int(1 / i) for i in s)
 			stride = kernel_size
