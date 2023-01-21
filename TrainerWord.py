@@ -277,13 +277,13 @@ class Trainer():
                     inputs = inputs.cuda(0)
                     for lab in range(len(labels)):
                         labels[lab] = labels[lab].cuda(0)
-                        log.debug("label shape", labels[lab].shape)
+                        # log.debug("label shape", labels[lab].shape)
 
 
                 with torch.cuda.amp.autocast():
                     output = self.model(inputs, centers)
                     for out in range(len(output)):
-                        log.debug("output shape", output[out].shape)
+                        # log.debug("output shape", output[out].shape)
                     del inputs
                     if len(self.net_num_pool_op_kernel_sizes) == 0:
                         labels = labels.cuda(0)
@@ -314,7 +314,6 @@ class Trainer():
                 del labels
 
                 gc.collect()
-                exit(0)
 
             l_train = l_train / btc
             l_val = 0
@@ -582,9 +581,9 @@ class Trainer():
         ret = rearrange(output / count, 'b c z x y -> b c x y z')
 
 
-        dbg_ = torch.argmax(ret, dim=1)
-        dbg_ = convert_seg_image_to_one_hot_encoding_batched(
-                        dbg_.numpy(), [i for i in range(self.classes)])
+        # dbg_ = torch.argmax(ret, dim=1)
+        # dbg_ = convert_seg_image_to_one_hot_encoding_batched(
+                        # dbg_.numpy(), [i for i in range(self.classes)])
         # log.debug("stats", [["c {}:".format(ii), dbg_[0,ii,...].min().item(),
         #                             dbg_[0,ii,...].mean().item(),
         #                             dbg_[0,ii,...].max().item(),
