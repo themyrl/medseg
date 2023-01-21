@@ -580,7 +580,7 @@ class Trainer():
 
         dbg_ = torch.argmax(ret, dim=1)
         dbg_ = convert_seg_image_to_one_hot_encoding_batched(
-                        dbg_, [i for i in range(self.classes)])
+                        dbg_.numpy(), [i for i in range(self.classes)])
         log.debug("stats", [["c {}:".format(ii), dbg_[ii].min().item(),
                                     dbg_[ii].mean().item(),
                                     dbg_[ii].max().item(),
