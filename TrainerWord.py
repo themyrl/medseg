@@ -555,11 +555,11 @@ class Trainer():
                         with torch.no_grad():
                             with torch.cuda.amp.autocast():
                                 out_crop = self.model(crop, centers)
-                                for dbg_ in range(self.classes):
-                                    log.debug("C {} stats".format(dbg_), [out_crop[0][0,dbg_,...].min().item(), 
-                                                                        out_crop[0][0,dbg_,...].mean().item(), 
-                                                                        out_crop[0][0,dbg_,...].max().item(), 
-                                                                        out_crop[0][0,dbg_,...].sum().item()])
+                                # for dbg_ in range(self.classes):
+                                    # log.debug("C {} stats".format(dbg_), [out_crop[0][0,dbg_,...].min().item(), 
+                                    #                                     out_crop[0][0,dbg_,...].mean().item(), 
+                                    #                                     out_crop[0][0,dbg_,...].max().item(), 
+                                    #                                     out_crop[0][0,dbg_,...].sum().item()])
                         output[:, :, idx_d:idx_d + D_crop, idx_h:idx_h +
                                H_crop, idx_w:idx_w + W_crop] = out_crop[0].cpu()
                         del out_crop
@@ -575,4 +575,14 @@ class Trainer():
 
                     gc.collect()
 
-        return rearrange(output / count, 'b c z x y -> b c x y z')
+        ret = rearrange(output / count, 'b c z x y -> b c x y z')
+
+
+        dbg_ = torch.argmax(ret, dim=1)
+        dbg_ = convert_seg_image_to_one_hot_encoding_batched(
+                        dbg_, [i for i in range(self.classes)])
+        log.debug("stats", [dbg_[ii].min().item(),
+                            dbg_[ii].mean().item(),
+                            dbg_[ii].max().item(),
+                            dbg_[ii].sum().item() for ii in range(self.classes)])
+        return ret
