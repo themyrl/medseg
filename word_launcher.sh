@@ -36,14 +36,14 @@ module load python/3.8.8
 # srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0/labelsVal -o /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0/imagesVal_npz -t int16
 
 # Training
-# python mainWord.py -m model=nnunet dataset=word training=training_word #nnword
+python mainWord.py -m model=nnunet dataset=word training=training_word #nnword
 
 
 
 
 
 # Eval
-python mainWord.py -m model=nnunet dataset=word training=training_word training.only_val=True #eval
+# python mainWord.py -m model=nnunet dataset=word training=training_word training.only_val=True #eval
 
 
 
