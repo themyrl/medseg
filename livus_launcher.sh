@@ -24,8 +24,8 @@ module load python/3.8.8
 
 
 # Dataset preprocessing #dataset
-# srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/LiverUS/imagesTr -o /gpfsscratch/rech/arf/unm89rb/LiverUS/imagesTr_npz -t float16
-# srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/LiverUS/labelsStaple -o /gpfsscratch/rech/arf/unm89rb/LiverUS/labelsStaple_npz -t int16
+srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/LiverUS/imagesTr -o /gpfsscratch/rech/arf/unm89rb/LiverUS/imagesTr_npz -t float16
+srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/LiverUS/labelsStaple -o /gpfsscratch/rech/arf/unm89rb/LiverUS/labelsStaple_npz -t int16
 
 
 
