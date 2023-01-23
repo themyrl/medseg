@@ -282,7 +282,7 @@ class Trainer():
 
                 with torch.cuda.amp.autocast():
                     output = self.model(inputs, centers)
-                    for out in range(len(output)):
+                    # for out in range(len(output)):
                         # log.debug("output shape", output[out].shape)
                     del inputs
                     if len(self.net_num_pool_op_kernel_sizes) == 0:
