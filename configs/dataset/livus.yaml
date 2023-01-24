@@ -1,8 +1,8 @@
 name: livus
 path: 
   pth: /gpfsscratch/rech/arf/unm89rb/LiverUS
-  im: ${dataset.path.pth}
-  seg: ${dataset.path.pth}
+  im: ${dataset.path.pth}/imagesTr_npz
+  seg: ${dataset.path.pth}/labelStaple_npz
 
 im_size: [128,128,128]
 

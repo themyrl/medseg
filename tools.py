@@ -247,8 +247,8 @@ def create_split_livus(im_pth, seg_pth, val=False, log=None, *args, **kwargs):
 	for f in fold:
 		tmp = {
 				'image': os.path.join(im_pth,f+".npz"),
-				'label': os.path.join(seg_pth,f),
-				'id': f
+				'label': os.path.join(seg_pth,f.replace("_img", "-St_Vol.npz")),
+				'id': f.replace("_img", "xxx")
 				}
 		data.append(tmp)
 

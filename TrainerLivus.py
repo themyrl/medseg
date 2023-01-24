@@ -30,7 +30,7 @@ import monai.transforms as mt
 # from monai.inferers import sliding_window_inference
 from monai.metrics import compute_meandice, compute_hausdorff_distance, DiceMetric
 
-from tools import create_split_word, import_model, get_loss, poly_lr, create_path_if_not_exists, _to_one_hot, CustomDice
+from tools import create_split_livus, import_model, get_loss, poly_lr, create_path_if_not_exists, _to_one_hot, CustomDice
 from CustomTransform import CustomRandScaleCropd, CustomRandCropByPosNegLabeld
 from CustomDataset import CustomDataset
 
@@ -100,8 +100,8 @@ class Trainer():
 
         self.seg_path = cfg.dataset.path.seg
        
-        self.train_split = create_split_word(cfg.dataset.path.im, cfg.dataset.path.seg, log=log)
-        self.val_split = create_split_word(cfg.dataset.path.im, cfg.dataset.path.seg, val=True, log=log)
+        self.train_split = create_split_livus(cfg.dataset.path.im, cfg.dataset.path.seg, log=log)
+        self.val_split = create_split_livus(cfg.dataset.path.im, cfg.dataset.path.seg, val=True, log=log)
 
 
 
@@ -436,7 +436,7 @@ class Trainer():
         for f in os.listdir(self.infer_path):
             if '.npz' in f:
                 pred = np.load(os.path.join(self.infer_path, f))['arr_0']
-                anno = np.load(os.path.join(self.seg_path, "labelsVal_npz", f))['arr_0']
+                anno = np.load(os.path.join(self.seg_path, f.replace("_xxx", "-St_Vol.npz")))['arr_0']
 
                 if self._loss != "Dice":
                     pred = convert_seg_image_to_one_hot_encoding_batched(
