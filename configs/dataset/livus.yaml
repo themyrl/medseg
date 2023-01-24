@@ -1,0 +1,19 @@
+name: livus
+path: 
+  pth: /gpfsscratch/rech/arf/unm89rb/LiverUS
+  im: ${dataset.path.pth}
+  seg: ${dataset.path.pth}
+
+im_size: [128,128,128]
+
+len: 24
+classes: 5
+
+cv: cv1
+
+# dataset len: 24
+# train : 16
+# test : 8
+# train : ['10_1048_img', '10_158_img', '10_1141_img', '10_265_img', '10_1309_img', '10_855_img', '10_687_img', '10_225_img', '10_752_img', '10_832_img', '10_948_img', '10_1166_img', '10_73_img', '10_485_img', '10_108_img', '10_1068_img']
+# test : ['10_913_img', '10_128_img', '10_652_img', '10_3_img', '10_193_img', '10_400_img', '10_782_img', '10_1209_img']
+

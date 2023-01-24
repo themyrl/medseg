@@ -232,6 +232,28 @@ def create_split_word(im_pth, seg_pth, val=False, suffixe="_npz", log=None, *arg
 
 	return data
 
+def create_split_livus(im_pth, seg_pth, val=False, log=None, *args, **kwargs):
+	train_splt = ['10_1048_img', '10_158_img', '10_1141_img', '10_265_img', '10_1309_img', '10_855_img', '10_687_img', '10_225_img', '10_752_img', '10_832_img', '10_948_img', '10_1166_img', '10_73_img', '10_485_img', '10_108_img', '10_1068_img']
+	val_splt = ['10_913_img', '10_128_img', '10_652_img', '10_3_img', '10_193_img', '10_400_img', '10_782_img', '10_1209_img']
+
+
+	if val:
+		fold = val_splt
+	else:
+		fold = train_splt
+
+	# fold = os.listdir(im_pth)
+	data=[]
+	for f in fold:
+		tmp = {
+				'image': os.path.join(im_pth,f+".npz"),
+				'label': os.path.join(seg_pth,f),
+				'id': f
+				}
+		data.append(tmp)
+
+	return data
+
 
 class Log(object):
 	"""docstring for Log"""
