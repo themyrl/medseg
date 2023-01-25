@@ -6,7 +6,7 @@ path:
 
 im_size: [128,128,128]
 
-len: 39
+len: 120
 classes: 17
 
 cv: cv1
