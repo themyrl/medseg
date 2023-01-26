@@ -436,7 +436,7 @@ class Trainer():
         for f in os.listdir(self.infer_path):
             if '.npz' in f:
                 pred = np.load(os.path.join(self.infer_path, f))['arr_0']
-                anno = np.load(os.path.join(self.seg_path, f.replace("_xxx", "-St_Vol.npz")))['arr_0']
+                anno = np.load(os.path.join(self.seg_path, f.replace("_pred", "-St_Vol.npz")))['arr_0']
 
                 if self._loss != "Dice":
                     pred = convert_seg_image_to_one_hot_encoding_batched(
