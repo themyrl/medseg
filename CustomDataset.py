@@ -74,10 +74,13 @@ class CustomDataset(Dataset):
 			data_i["label3"] = rearrange(np.load(self.data[i]["label3"])['arr_0'][None, ...], 'b x y z -> b z x y')
 
 
-		if "_3_" in self.data[i]["image"].split('/')[-1]:
+		if "_3_img" in self.data[i]["image"].split('/')[-1]:
 			data_i["id"] = [self.data[i]["image"].split('/')[-1].replace('_3_img', '_xxx')]
-		else:
+		elif "3_img" in self.data[i]["image"].split('/')[-1]:
 			data_i["id"] = [self.data[i]["image"].split('/')[-1].replace('3_img', '_xxx')]
+		else:
+			data_i["id"] = [self.data[i]["image"].split('/')[-1].replace('_img', '_xxx')]
+
 
 
 
