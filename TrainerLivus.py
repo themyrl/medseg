@@ -118,24 +118,30 @@ class Trainer():
 
         val_transforms = Compose(
                 [
-                    RandCropByLabelClassesd(keys=["image", "label"],
-                                            label_key="label",
-                                            spatial_size=self.crop_size,
-                                            num_classes=cfg.dataset.classes,
-                                            num_samples=1
-                                            ),
+                    # RandCropByLabelClassesd(keys=["image", "label"],
+                    #                         label_key="label",
+                    #                         spatial_size=self.crop_size,
+                    #                         num_classes=cfg.dataset.classes,
+                    #                         num_samples=1
+                    #                         ),
+                    RandSpatialCropd(keys=["image", "label"], 
+                                roi_size=self.crop_size,
+                                random_size=False),
                     mt.NormalizeIntensityd(keys="image", nonzero=True, channel_wise=True),
                     
                 ])
 
         train_transforms = Compose(
             [
-                RandCropByLabelClassesd(keys=["image", "label"],
-                                            label_key="label",
-                                            spatial_size=self.crop_size,
-                                            num_classes=cfg.dataset.classes,
-                                            num_samples=1
-                                            ),
+                # RandCropByLabelClassesd(keys=["image", "label"],
+                #                             label_key="label",
+                #                             spatial_size=self.crop_size,
+                #                             num_classes=cfg.dataset.classes,
+                #                             num_samples=1
+                #                             ),
+                RandSpatialCropd(keys=["image", "label"], 
+                                roi_size=self.crop_size,
+                                random_size=False),
                 RandFlipd(keys=["image", "label"], prob=0.25, spatial_axis=0),
                 RandFlipd(keys=["image", "label"], prob=0.25, spatial_axis=1),
                 RandFlipd(keys=["image", "label"], prob=0.25, spatial_axis=2),
