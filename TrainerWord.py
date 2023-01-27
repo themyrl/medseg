@@ -347,6 +347,7 @@ class Trainer():
                         gc.collect()
 
                         if self._loss != "Dice":
+                            # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! inspect here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                             output = output[0]
                             output = torch.argmax(output, dim=1)
                             labels = _to_one_hot(
