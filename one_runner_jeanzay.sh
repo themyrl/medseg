@@ -8,8 +8,8 @@
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
 #SBATCH --time=00:10:00             # maximum execution time (HH:MM:SS)
 #SBATCH --qos=qos_gpu-dev
-#SBATCH --output=multilogs/dbgr3v2usglv2%j.out # output file name # add %j to id the job
-#SBATCH --error=multilogs/dbgr3v2usglv2%j.err  # error file name # add %j to id the job
+#SBATCH --output=multilogs/dbgr3v2usglv2.out # output file name # add %j to id the job
+#SBATCH --error=multilogs/dbgr3v2usglv2.err  # error file name # add %j to id the job
 # # #   SBATCH -C v100-32g
 
 set -x
