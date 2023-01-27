@@ -64,8 +64,8 @@ module load python/3.8.8
 
 
 # python mainDoubleV2.py -m model=glam model.name=GLAMv2 dataset=ct_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #v2ctglv2
-python mainDoubleV2.py -m model=glam model.name=GLAMv2_r2 dataset=us_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #r3v2usglv2
-# python mainDoubleV2.py -m model=glam model.name=GLAMv2_r2dbg dataset=us_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #dbgr3v2usglv2
+# python mainDoubleV2.py -m model=glam model.name=GLAMv2_r2 dataset=us_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #r3v2usglv2
+python mainDoubleV2.py -m model=glam model.name=GLAMv2_r2_dbg dataset=us_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=$1 #dbgr3v2usglv2
 
 # python mainV2.py -m model=unetr dataset=ct_128_simple_jz_v2 training=training_128_jz_v2 training.loss=Dice dataset.cv=$1 #cttrv2
 
