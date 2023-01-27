@@ -117,7 +117,7 @@ class CustomDataset(Dataset):
 	            np.vstack(self.net_num_pool_op_kernel_sizes), axis=0))[:-1]
 
 			self.log.debug("label shape", data_i["label"][None,...].numpy().shape)
-			data_i["label"] = downsample_seg_for_ds_transform3(data_i["label"][None,...].numpy(), deep_supervision_scales, classes=[i for i in range(self.num_classes)])
+			data_i["label"] = downsample_seg_for_ds_transform3(data_i["label"][None,...].numpy(), deep_supervision_scales, classes=[i for i in range(self.num_classes)], self.log)
 			self.log.debug("label[0] shape", data_i["label"][0][None,...].numpy().shape)
 
 			exit(0)

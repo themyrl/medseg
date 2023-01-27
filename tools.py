@@ -66,12 +66,14 @@ def poly_lr(epoch, max_epochs, initial_lr, exponent=0.9):
 	return initial_lr * (1 - epoch / max_epochs)**exponent
 
 
-def downsample_seg_for_ds_transform3(seg, ds_scales=((1, 1, 1), (0.5, 0.5, 0.5), (0.25, 0.25, 0.25)), classes=None):
+def downsample_seg_for_ds_transform3(seg, ds_scales=((1, 1, 1), (0.5, 0.5, 0.5), (0.25, 0.25, 0.25)), classes=None, log=None):
 	output = []
 	one_hot = torch.from_numpy(convert_seg_image_to_one_hot_encoding_batched(seg[:, 0], classes)) # b, c,
 
 	for s in ds_scales:
 		if all([i == 1 for i in s]):
+			if log != None:
+				log.debug("here we are", seg.shape)
 			output.append(seg)
 			# output.append(one_hot[0,...])
 		else:
