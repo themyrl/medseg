@@ -72,8 +72,8 @@ def downsample_seg_for_ds_transform3(seg, ds_scales=((1, 1, 1), (0.5, 0.5, 0.5),
 
 	for s in ds_scales:
 		if all([i == 1 for i in s]):
-			if log != None:
-				log.debug("here we are", seg.shape)
+			# if log != None:
+				# log.debug("here we are", seg.shape)
 			output.append(seg)
 			# output.append(one_hot[0,...])
 		else:

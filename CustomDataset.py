@@ -116,11 +116,11 @@ class CustomDataset(Dataset):
 			deep_supervision_scales = [[1, 1, 1]] + list(list(i) for i in 1 / np.cumprod(
 	            np.vstack(self.net_num_pool_op_kernel_sizes), axis=0))[:-1]
 
-			self.log.debug("label shape", data_i["label"][None,...].numpy().shape)
+			# self.log.debug("label shape", data_i["label"][None,...].numpy().shape)
 			data_i["label"] = downsample_seg_for_ds_transform3(data_i["label"][None,...].numpy(), deep_supervision_scales, classes=[i for i in range(self.num_classes)], log=self.log)
-			self.log.debug("label[0] shape", data_i["label"][0][None,...].numpy().shape)
+			# self.log.debug("label[0] shape", data_i["label"][0][None,...].numpy().shape)
 
-			exit(0)
+			# exit(0)
 			
 
 			if self.multi_anno:
