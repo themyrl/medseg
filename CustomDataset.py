@@ -29,7 +29,7 @@ class CustomDataset(Dataset):
 		self.type=type_
 		self.multi_anno = multi_anno
 		self.num_classes = num_classes
-		self.name="us"
+		self.name=name
 		# self.croper = CustomRandCropByPosNegLabeld(
 		# 				            keys=["image", "label"],
 		# 				            label_key="label",
