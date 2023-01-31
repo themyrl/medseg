@@ -17,7 +17,7 @@ import torch
 
 class CustomDataset(Dataset):
 	def __init__(self, data, transform=None, iterations=250, crop_size=[128,128,128], log=None, net_num_pool_op_kernel_sizes=[], type_='train', 
-		multi_anno=True, num_classes=2, *args, **kwargs):
+		multi_anno=True, num_classes=2, name="us",*args, **kwargs):
 		super().__init__(*args, **kwargs)
 		# We use our own Custom dataset wich with we can keep track of sub volumes position.
 		self.data = monai.data.Dataset(data)
@@ -29,6 +29,7 @@ class CustomDataset(Dataset):
 		self.type=type_
 		self.multi_anno = multi_anno
 		self.num_classes = num_classes
+		self.name="us"
 		# self.croper = CustomRandCropByPosNegLabeld(
 		# 				            keys=["image", "label"],
 		# 				            label_key="label",
@@ -74,10 +75,11 @@ class CustomDataset(Dataset):
 			data_i["label3"] = rearrange(np.load(self.data[i]["label3"])['arr_0'][None, ...], 'b x y z -> b z x y')
 
 
-		if "_3_img" in self.data[i]["image"].split('/')[-1]:
-			data_i["id"] = [self.data[i]["image"].split('/')[-1].replace('_3_img', '_xxx')]
-		elif "3_img" in self.data[i]["image"].split('/')[-1]:
-			data_i["id"] = [self.data[i]["image"].split('/')[-1].replace('3_img', '_xxx')]
+		if self.name == "us":
+			if "_3_img" in self.data[i]["image"].split('/')[-1]:
+				data_i["id"] = [self.data[i]["image"].split('/')[-1].replace('_3_img', '_xxx')]
+			elif "3_img" in self.data[i]["image"].split('/')[-1]:
+				data_i["id"] = [self.data[i]["image"].split('/')[-1].replace('3_img', '_xxx')]
 		else:
 			data_i["id"] = [self.data[i]["image"].split('/')[-1].replace('_img', '_xxx')]
 
