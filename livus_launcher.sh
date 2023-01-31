@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=livus     # job name
+#SBATCH --job-name=evallivus     # job name
 #SBATCH --ntasks=1                  # number of MP tasks
 #SBATCH --ntasks-per-node=1          # number of MPI tasks per node
 #SBATCH --gres=gpu:1                 # number of GPUs per node
@@ -8,8 +8,8 @@
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
 #SBATCH --time=48:00:00             # maximum execution time (HH:MM:SS)
 #SBATCH --qos=qos_gpu-t4
-#SBATCH --output=fivelog/livus.out # output file name # add %j to id the job
-#SBATCH --error=fivelog/livus.err  # error file name # add %j to id the job
+#SBATCH --output=fivelog/evallivus.out # output file name # add %j to id the job
+#SBATCH --error=fivelog/evallivus.err  # error file name # add %j to id the job
 # # #     SBATCH -C v100-32g
 
 set -x
@@ -31,14 +31,14 @@ module load python/3.8.8
 
 
 # Training
-python mainLivus.py -m model=nnunet dataset=livus training=training_livus #livus
+# python mainLivus.py -m model=nnunet dataset=livus training=training_livus #livus
 
 
 
 
 
 # Eval
-# python mainLivus.py -m model=nnunet dataset=livus training=training_livus training.only_val=True #evallivus
+python mainLivus.py -m model=nnunet dataset=livus training=training_livus training.only_val=True #evallivus
 
 
 

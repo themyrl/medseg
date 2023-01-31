@@ -426,7 +426,7 @@ class Trainer():
 
                 name = idx.replace('xxx', 'pred')
                 file = os.path.join(self.infer_path, name)
-                log.debug("idx name file", idx, name, file)
+                log.debug("idx name file", str((idx, name, file)))
 
                 # pred_nib = nib.Nifti1Image(prediction.numpy(), None)
                 # nib.save(pred_nib, file)
