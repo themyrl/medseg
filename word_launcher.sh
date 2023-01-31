@@ -37,13 +37,14 @@ module load python/3.8.8
 
 # Training
 # python mainWord.py -m model=nnunet dataset=word training=training_word #nnword
+python mainWord.py -m model=nnunet dataset=worddbg training=training_word #nnworddbg
 
 
 
 
 
 # Eval
-python mainWord.py -m model=nnunet dataset=word training=training_word training.only_val=True #eval
+# python mainWord.py -m model=nnunet dataset=word training=training_word training.only_val=True #eval
 
 
 

@@ -418,7 +418,7 @@ class Trainer():
                 inputs = batch_data["image"]
                 labels = batch_data["label"]
                 prediction = self.inference(inputs, labels)
-                print("----> pred before", prediction.shape)
+                # log.debug("----> pred before", prediction.shape)
 
                 if self._loss == "Dice":
                     prediction = post_trans(prediction)[0, ...]
@@ -431,8 +431,8 @@ class Trainer():
 
                 # pred_nib = nib.Nifti1Image(prediction.numpy(), None)
                 # nib.save(pred_nib, file)
-                log.debug("file", file)
-                log.debug("idx", idx)
+                # log.debug("file", file)
+                # log.debug("idx", idx)
                 log.debug("prediction.shape", prediction.shape)
                 np.savez(file, prediction.numpy())
             # l_val = l_val/len_val

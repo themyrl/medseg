@@ -1,0 +1,12 @@
+name: worddbg
+path: 
+  pth: /gpfsscratch/rech/arf/unm89rb/WORD-V0.1.0
+  im: ${dataset.path.pth}
+  seg: ${dataset.path.pth}
+
+im_size: [128,128,128]
+
+len: 120
+classes: 2
+
+cv: cv1
