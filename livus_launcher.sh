@@ -1,6 +1,6 @@
 #!/bin/bash
-#SBATCH --job-name=data     # job name
 #SBATCH -A arf@v100
+#SBATCH --job-name=data     # job name
 #SBATCH --ntasks=1                  # number of MP tasks
 #SBATCH --ntasks-per-node=1          # number of MPI tasks per node
 #SBATCH --gres=gpu:1                 # number of GPUs per node
