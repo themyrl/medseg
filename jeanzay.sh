@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -A arf@v100
-#SBATCH --job-name=data     # job name
+#SBATCH --job-name=infertime     # job name
 #SBATCH --ntasks=1                  # number of MP tasks
 #SBATCH --ntasks-per-node=1          # number of MPI tasks per node
 #SBATCH --gres=gpu:1                 # number of GPUs per node
@@ -9,8 +9,8 @@
 #SBATCH --distribution=block:block   # we pin the tasks on contiguous cores
 #SBATCH --time=05:30:00             # maximum execution time (HH:MM:SS)
 #SBATCH --qos=qos_gpu-t3
-#SBATCH --output=multilogs/data.out # output file name # add %j to id the job
-#SBATCH --error=multilogs/data.err  # error file name # add %j to id the job
+#SBATCH --output=multilogs/infertime.out # output file name # add %j to id the job
+#SBATCH --error=multilogs/infertime.err  # error file name # add %j to id the job
 #SBATCH -C v100-32g
 
 set -x
@@ -45,9 +45,9 @@ module load python/3.8.8
 # srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USimg -o /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USimg_128_t -s 128 -m trilinear -t float32
 # srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/CTimg -o /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/CTimg_128_t -s 128 -m trilinear -t float32
 
-srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_mf -o /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_mf_128 -s 128 -m trilinear -t int16
-srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_a2 -o /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_a2_128 -s 128 -m trilinear -t int16
-srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_a3 -o /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_a3_128 -s 128 -m trilinear -t int16
+# srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_mf -o /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_mf_128 -s 128 -m trilinear -t int16
+# srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_a2 -o /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_a2_128 -s 128 -m trilinear -t int16
+# srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_a3 -o /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_a3_128 -s 128 -m trilinear -t int16
 # srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask_mf -o /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask_mf_128 -s 128 -m trilinear -t int16
 # srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask_a2 -o /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask_a2_128 -s 128 -m trilinear -t int16
 # srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask_a3 -o /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/CT_DATA/CTmask_a3_128 -s 128 -m trilinear -t int16
@@ -88,7 +88,8 @@ srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Lo
 # python mainV2.py -m model=unetr dataset=ct_128_simple_jz_v2 training=training_128_jz_v2 training.loss=Dice dataset.cv=cv1 #cttrv2
 
 
-
+### infr time
+python mainDoubleV2.py -m model=nnunet dataset=us_128_double_jz_v2 training=training_128_jz_v2 dataset.cv=cv1 training.only_val=True # infertime
 
 ###### Now we try without normalized intensity nor cropforeground
 # python mainDouble.py -m model=glam dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1 #glam_gdadbg
