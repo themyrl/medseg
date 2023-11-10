@@ -52,6 +52,7 @@ import gc
 
 
 from tqdm import trange
+import time
 
 
 class Trainer():
@@ -451,12 +452,17 @@ class Trainer():
         # len_val = 0
         # tqdm_ = trange(len(self.test_loader), desc='Bar desc', leave=True)
         if do_infer:
+            S_tone = 0
+            tall_0 = time.time()
             self.model.eval()
             for batch_data in tqdm(self.test_loader):
                 # for batch_data in self.test_loader:
                 inputs = batch_data["image"]
                 labels = batch_data["label"]
+                tone_0 = time.time()
                 prediction = self.inference(inputs, labels)
+                tone_1 = time.time()
+                S_tone += tone_1 - tone_0
 
                 if self._loss == "Dice":
                     prediction = post_trans(prediction)[0, ...]
@@ -473,6 +479,8 @@ class Trainer():
                 # log.debug("idx", idx)
                 np.savez(file, prediction.numpy())
             # l_val = l_val/len_val
+            log.info("Prediction time for one volume", S_tone/len(self.test_loader))
+            log.info("Prediction whole fold", time.time() - tall_0)
 
         # loader = LoadImage()
         results = {}
