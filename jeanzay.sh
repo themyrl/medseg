@@ -42,7 +42,7 @@ module load python/3.8.8
 
 
 
-srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USimg -o /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USimg_128_t -s 128 -m trilinear -t float32
+# srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USimg -o /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USimg_128_t -s 128 -m trilinear -t float32
 # srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/CTimg -o /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/CTimg_128_t -s 128 -m trilinear -t float32
 
 srun python convert_dataset_v2.py -i /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_mf -o /gpfsscratch/rech/arf/unm89rb/Trusted_v1_Loic/US_DATA/USmask_mf_128 -s 128 -m trilinear -t int16
