@@ -42,6 +42,11 @@ You can also leverage hydra functionalities by adding `dataset.path.pth path/to/
 
 
 ### 2. Training
+Change in `configs/training/training_128_jz_v2.yaml` the path to the inference, checkpoints and logs outputs like this:
+```
+/path/to/output/medseg_results
+```
+
 To train a model from scratch with double annotations (make sure to have the model, dataset and training config file): 
 ```
 mainDoubleV2.py -m model=model_config_name dataset=dataset_config_name training=training_config_name dataset.cv=cv_x
@@ -54,7 +59,7 @@ Example - To train GLAM from scratch with double annotations on CT 128x128x128 f
 python mainDoubleV2.py -m model=glam dataset=ct_128_double_jz training=training_128_jz dataset.cv=cv1
 ```
 
-#### Training nnUNet
+#### 2.1 Training nnUNet
 To train on split 1, change "cvX" by "cv1", do the same for 2, 3, 4 and 5.
 
 CT Double:
@@ -75,7 +80,7 @@ US Simple:
 python mainV2.py -m model=nnunet dataset=us_128_simple_jz_v2 training=training_128_jz_v2 dataset.cv=cvX
 ```
 
-#### Training CoTr
+#### 2.2 Training CoTr
 To train on split 1, change "cvX" by "cv1", do the same for 2, 3, 4 and 5.
 
 CT Double:
